@@ -51,6 +51,7 @@ export function CognitiveDiskCleanupApp() {
 
   return (
     <div
+      className="cdc-root"
       style={{
         height: '100%',
         display: 'flex',
@@ -68,7 +69,7 @@ export function CognitiveDiskCleanupApp() {
         </p>
       </div>
 
-      <div style={{ flex: 1, minHeight: 0, overflow: 'auto', padding: 16 }}>
+      <div className="cdc-main" style={{ flex: 1, minHeight: 0, overflow: 'auto', padding: 16 }}>
         {phase === 'intro' ? (
           <button
             type="button"
