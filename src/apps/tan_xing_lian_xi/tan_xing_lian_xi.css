@@ -1,0 +1,302 @@
+/* 仅作用于复原力窗口内（根类名 rpRoot），避免干扰全局 XP */
+.rpRoot * {
+  box-sizing: border-box;
+}
+
+.rpRoot {
+  margin: 0;
+  padding: 0;
+  padding-bottom: 0.75rem;
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+
+  --rp-primary: #1d9e75;
+  --rp-primary-soft: #e1f5ee;
+  --rp-accent: #5dca93;
+  --rp-text-primary: #1f2937;
+  --rp-text-secondary: #4b5563;
+  --rp-text-tertiary: #9ca3af;
+  --rp-bg: #ffffff;
+  --rp-bg-secondary: #f3f4f6;
+  --rp-border: #e5e7eb;
+  color: var(--rp-text-primary);
+}
+
+.rpHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.rpHeader {
+  margin-bottom: 1.5rem;
+}
+
+.rpHeaderTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.rpTodayTitle {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.rpDateLabel {
+  font-size: 12px;
+  color: var(--rp-text-tertiary);
+}
+
+.rpStreak {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #0f6e56;
+  background: var(--rp-primary-soft);
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+.rpSectionTitle {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.07em;
+  color: var(--rp-text-tertiary);
+  text-transform: uppercase;
+  margin: 1.5rem 0 10px;
+}
+
+.rpCard {
+  background: var(--rp-bg);
+  border: 0.5px solid var(--rp-border);
+  border-radius: 12px;
+  padding: 1.25rem;
+  margin-bottom: 12px;
+}
+
+.rpCardActive {
+  border-color: var(--rp-accent);
+  background: var(--rp-primary-soft);
+}
+
+.rpCardToday {
+  border: 2px solid var(--rp-accent);
+}
+
+.rpCardHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.rpTag {
+  font-size: 10px;
+  font-weight: 500;
+  padding: 3px 8px;
+  border-radius: 20px;
+}
+
+.rpTagBreath {
+  background: #e1f5ee;
+  color: #085041;
+}
+.rpTagBody {
+  background: #faeeda;
+  color: #633806;
+}
+.rpTagReflect {
+  background: #fbeaf0;
+  color: #72243e;
+}
+.rpTagWrite {
+  background: #e6f1fb;
+  color: #0c447c;
+}
+
+.rpCardTitle {
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.rpCardDesc {
+  font-size: 13px;
+  color: var(--rp-text-secondary);
+  line-height: 1.6;
+}
+
+.rpCardDuration {
+  font-size: 12px;
+  color: var(--rp-text-tertiary);
+  margin-top: 8px;
+}
+
+.rpDoneBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+  font-size: 13px;
+  padding: 6px 14px;
+  border: 0.5px solid #d1d5db;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--rp-text-primary);
+  cursor: pointer;
+}
+
+.rpDoneBtn:hover {
+  background: var(--rp-bg-secondary);
+}
+
+.rpDoneBtnDone {
+  background: var(--rp-primary-soft);
+  border-color: var(--rp-accent);
+  color: #085041;
+  cursor: default;
+}
+
+.rpCheck {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1.5px solid #d1d5db;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.rpCheckDone {
+  background: var(--rp-primary);
+  border-color: var(--rp-primary);
+}
+
+.rpTodayBadge {
+  font-size: 11px;
+  font-weight: 500;
+  background: var(--rp-primary);
+  color: #e8fff5;
+  padding: 2px 8px;
+  border-radius: 20px;
+  margin-left: 8px;
+}
+
+.rpTimerArea {
+  margin-top: 12px;
+  display: none;
+}
+
+.rpTimerAreaShow {
+  display: block;
+}
+
+.rpTimerBarWrap {
+  height: 4px;
+  background: var(--rp-border);
+  border-radius: 2px;
+  margin-bottom: 8px;
+  overflow: hidden;
+}
+
+.rpTimerBar {
+  height: 100%;
+  background: var(--rp-primary);
+  border-radius: 2px;
+  transition: width 1s linear;
+}
+
+.rpTimerTxt {
+  font-size: 12px;
+  color: var(--rp-text-secondary);
+}
+
+.rpBreathGuide {
+  display: none;
+  text-align: center;
+  padding: 12px 0;
+}
+
+.rpBreathGuideShow {
+  display: block;
+}
+
+.rpBreathCircle {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  border: 2px solid var(--rp-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 8px;
+  font-size: 13px;
+  color: #085041;
+  transition: transform 4s ease-in-out;
+}
+
+.rpBreathPhase {
+  font-size: 13px;
+  color: #0f6e56;
+  font-weight: 500;
+}
+
+.rpDots {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  margin-top: 6px;
+}
+
+.rpDot {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--rp-border);
+}
+
+.rpDotDone {
+  background: var(--rp-primary);
+}
+
+.rpDotToday {
+  background: #9fe1cb;
+}
+
+.rpTa {
+  width: 100%;
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--rp-text-primary);
+  background: var(--rp-bg-secondary);
+  border: 0.5px solid var(--rp-border);
+  border-radius: 8px;
+  padding: 10px;
+  resize: vertical;
+  min-height: 60px;
+  line-height: 1.6;
+}
+
+.rpScrollInner {
+  max-height: min(520px, 70vh);
+  overflow-y: auto;
+}
+
+.rpWeatherHint {
+  margin: 8px 0 0;
+  font-size: 11px;
+  line-height: 1.52;
+  color: var(--rp-text-tertiary);
+}
+
+.rpWeatherHintStrong {
+  font-weight: 600;
+  color: var(--rp-text-secondary);
+}

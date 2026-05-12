@@ -1,0 +1,195 @@
+/* 5-4-3-2-1 着陆箱 — 鼠尾草绿 + 柔和蓝灰，占位阶段无外链贴图 */
+
+.gtRoot {
+  box-sizing: border-box;
+  min-height: 100%;
+  overflow: auto;
+  padding: 14px 14px 20px;
+  font-family:
+    'Segoe UI',
+    'PingFang SC',
+    'Microsoft YaHei',
+    sans-serif;
+  color: #2f3f3e;
+  background:
+    radial-gradient(ellipse 120% 80% at 50% -10%, rgba(168, 201, 191, 0.45), transparent),
+    radial-gradient(ellipse 80% 60% at 100% 100%, rgba(176, 198, 222, 0.35), transparent),
+    linear-gradient(165deg, #f5f9f8 0%, #eef3f8 52%, #f3f8f6 100%);
+}
+
+.gtSymbolRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  font-size: 22px;
+  letter-spacing: 0.2em;
+  opacity: 0.85;
+}
+
+.gtSymbolBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.55);
+  border: 0.5px solid rgba(95, 130, 120, 0.25);
+  font-size: 18px;
+  box-shadow: 0 4px 18px rgba(80, 110, 100, 0.08);
+}
+
+.gtReplaceHint {
+  font-size: 10px;
+  color: #7a8f8a;
+  text-align: center;
+  margin: -4px 0 14px;
+  line-height: 1.35;
+}
+
+.gtCard {
+  background: rgba(255, 255, 255, 0.68);
+  border: 0.5px solid rgba(95, 130, 120, 0.18);
+  border-radius: 16px;
+  padding: 16px 16px 18px;
+  box-shadow: 0 12px 40px rgba(60, 90, 85, 0.06);
+  backdrop-filter: blur(8px);
+}
+
+.gtEyebrow {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #6e8f86;
+  margin-bottom: 6px;
+}
+
+.gtTitle {
+  font-size: 17px;
+  font-weight: 600;
+  color: #243632;
+  line-height: 1.35;
+  margin-bottom: 8px;
+}
+
+.gtLead {
+  font-size: 13px;
+  line-height: 1.65;
+  color: #4a605a;
+  margin-bottom: 14px;
+}
+
+.gtMuted {
+  font-size: 12px;
+  color: #6b807b;
+  line-height: 1.55;
+  margin-bottom: 12px;
+}
+
+.gtEmergency {
+  font-size: 11px;
+  line-height: 1.55;
+  color: #607a94;
+  margin-top: 14px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(176, 198, 222, 0.22);
+  border: 0.5px solid rgba(96, 122, 148, 0.15);
+}
+
+.gtLabel {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: #344a44;
+  margin-bottom: 6px;
+}
+
+.gtArea {
+  width: 100%;
+  min-height: 120px;
+  padding: 10px 12px;
+  font-size: 14px;
+  line-height: 1.55;
+  border-radius: 12px;
+  border: 0.5px solid rgba(95, 130, 120, 0.22);
+  background: rgba(255, 255, 255, 0.9);
+  color: #2a3836;
+  resize: vertical;
+  font-family: inherit;
+}
+
+.gtArea:focus {
+  outline: none;
+  border-color: rgba(95, 150, 130, 0.45);
+  box-shadow: 0 0 0 3px rgba(140, 190, 170, 0.2);
+}
+
+.gtHintBelow {
+  font-size: 11px;
+  color: #8a9b96;
+  margin-top: 6px;
+}
+
+.gtNav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.gtBtnPrimary,
+.gtBtnGhost {
+  cursor: pointer;
+  font-size: 13px;
+  padding: 9px 18px;
+  border-radius: 999px;
+  border: 0.5px solid transparent;
+  font-family: inherit;
+}
+
+.gtBtnPrimary {
+  background: linear-gradient(135deg, #7aab9f, #92b8aa);
+  color: #fdfefe;
+  box-shadow: 0 6px 20px rgba(90, 130, 115, 0.18);
+}
+
+.gtBtnPrimary:hover {
+  filter: brightness(1.02);
+}
+
+.gtBtnPrimary:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.gtBtnGhost {
+  background: rgba(255, 255, 255, 0.5);
+  border-color: rgba(95, 130, 120, 0.25);
+  color: #446056;
+}
+
+.gtBtnGhost:hover {
+  background: rgba(255, 255, 255, 0.75);
+}
+
+.gtProgressDots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 16px;
+}
+
+.gtDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(95, 130, 120, 0.2);
+}
+
+.gtDotOn {
+  background: #6a9f8f;
+  transform: scale(1.15);
+}

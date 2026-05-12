@@ -1,0 +1,393 @@
+/**
+ * 情绪释放站 · 碎纸机 + 放飞气球
+ * 样式前缀：ers_
+ */
+
+.ersRoot {
+  --ers-bg: oklch(0.97 0.02 260);
+  --ers-card: oklch(0.995 0.01 260);
+  --ers-accent: oklch(0.72 0.14 340);
+  --ers-sky-top: oklch(0.78 0.08 230);
+  --ers-sky-mid: oklch(0.88 0.06 250);
+  --ers-sky-bottom: oklch(0.95 0.04 85);
+  --ers-balloon: oklch(0.72 0.18 25);
+  --ers-balloon-hi: oklch(0.85 0.12 55);
+  min-height: 100%;
+  background: linear-gradient(165deg, var(--ers-bg) 0%, oklch(0.94 0.03 280) 100%);
+  color: oklch(0.28 0.03 260);
+  font-size: 14px;
+  line-height: 1.55;
+  display: flex;
+  flex-direction: column;
+  padding: 0 14px 14px;
+}
+
+.ersMuted {
+  color: oklch(0.52 0.02 260);
+  font-size: 12px;
+}
+
+.ersTabs {
+  display: flex;
+  gap: 8px;
+  padding: 12px 0 10px;
+  border-bottom: 1px solid oklch(0.88 0.02 260);
+  flex-shrink: 0;
+}
+
+.ersTab {
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid oklch(0.82 0.03 260);
+  background: oklch(1 0 0 / 0.45);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 13px;
+  color: inherit;
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.ersTab:hover {
+  border-color: var(--ers-accent);
+  background: oklch(1 0.01 340 / 0.75);
+}
+
+.ersTab[data-active='true'] {
+  background: oklch(0.96 0.05 340);
+  border-color: oklch(0.72 0.12 340);
+  box-shadow: 0 0 0 1px oklch(0.72 0.12 340 / 0.25);
+  font-weight: 600;
+}
+
+.ersStage {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── 碎纸机 ── */
+.ersShredderWrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 10px;
+  min-height: 0;
+}
+
+.ersPaperStack {
+  position: relative;
+  flex: 1;
+  border-radius: 12px;
+  background: oklch(1 0.003 260);
+  border: 1px solid oklch(0.87 0.02 260);
+  box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.8);
+  overflow: hidden;
+  min-height: 160px;
+}
+
+.ersPaperInput {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 14px 16px;
+  border: none;
+  resize: none;
+  font-family: ui-serif, 'Songti SC', 'SimSun', serif;
+  font-size: 15px;
+  line-height: 1.65;
+  background: transparent;
+  color: oklch(0.28 0.03 260);
+  outline: none;
+}
+
+.ersPaperInput:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.ersParticleLayer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.ersParticle {
+  position: absolute;
+  top: 12%;
+  left: var(--ers-left-pct);
+  font-family: ui-serif, 'Songti SC', serif;
+  font-size: 13px;
+  color: oklch(0.42 0.04 260);
+  white-space: nowrap;
+  opacity: 0;
+  animation: ersPaperFall var(--ers-dur, 2.4s) ease-in forwards;
+  animation-delay: var(--ers-delay, 0s);
+}
+
+@keyframes ersPaperFall {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) rotate(0deg) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--ers-drift, 30px), 220px) rotate(var(--ers-rot, 180deg)) scale(0.65);
+  }
+}
+
+.ersShredMetal {
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  background: linear-gradient(
+    180deg,
+    oklch(0.78 0.02 260) 0%,
+    oklch(0.62 0.03 250) 40%,
+    oklch(0.48 0.04 250) 100%
+  );
+  box-shadow:
+    inset 0 2px 0 oklch(1 0 0 / 0.22),
+    0 2px 6px oklch(0.2 0.02 260 / 0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+.ersShredTeeth {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 10px;
+  transform: translateY(-50%);
+  background: repeating-linear-gradient(
+    90deg,
+    oklch(0.22 0.02 260) 0 4px,
+    oklch(0.12 0.02 260) 4px 8px
+  );
+}
+
+.ersToolbar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.ersPriBtn {
+  padding: 8px 18px;
+  border-radius: 10px;
+  border: none;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  background: linear-gradient(
+    180deg,
+    oklch(0.78 0.14 340) 0%,
+    oklch(0.62 0.16 330) 100%
+  );
+  color: white;
+  text-shadow: 0 1px 0 oklch(0.2 0.05 330 / 0.35);
+  box-shadow:
+    inset 0 1px 0 oklch(1 0 0 / 0.25),
+    0 2px 8px oklch(0.45 0.12 340 / 0.35);
+}
+
+.ersPriBtn:hover:not(:disabled) {
+  filter: brightness(1.05);
+}
+
+.ersPriBtn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  filter: grayscale(0.3);
+}
+
+.ersGhostBtn {
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: 1px solid oklch(0.82 0.02 260);
+  background: oklch(1 0.01 260);
+  font-family: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  color: inherit;
+}
+
+.ersGhostBtn:hover:not(:disabled) {
+  border-color: var(--ers-accent);
+  background: oklch(0.985 0.02 340);
+}
+
+.ersGhostBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ── 气球 ── */
+.ersSky {
+  flex: 1;
+  position: relative;
+  border-radius: 14px;
+  margin-top: 8px;
+  background: linear-gradient(
+    180deg,
+    var(--ers-sky-top) 0%,
+    var(--ers-sky-mid) 42%,
+    var(--ers-sky-bottom) 100%
+  );
+  overflow: hidden;
+  min-height: 340px;
+  box-shadow: inset 0 0 60px oklch(0.92 0.08 260 / 0.5);
+}
+
+.ersSun {
+  position: absolute;
+  top: 28px;
+  right: 48px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, oklch(0.99 0.05 95), oklch(0.93 0.12 95));
+  box-shadow:
+    0 0 24px oklch(0.95 0.15 95 / 0.8),
+    0 0 60px oklch(0.92 0.12 85 / 0.45);
+  opacity: 0.88;
+}
+
+.ersCloud {
+  position: absolute;
+  background: oklch(0.995 0.02 260 / 0.55);
+  border-radius: 50%;
+  filter: blur(0.5px);
+  animation: ersCloudDrift 42s linear infinite;
+}
+
+@keyframes ersCloudDrift {
+  0% {
+    transform: translateX(-20%);
+  }
+  100% {
+    transform: translateX(120%);
+  }
+}
+
+.ersBalloonHost {
+  position: absolute;
+  left: 50%;
+  bottom: 18%;
+  width: min(260px, 88%);
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: opacity 0.6s ease;
+}
+
+.ersBalloonHost[data-flight='gone'] {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ersBalloonGraphic {
+  position: relative;
+  width: 100%;
+  max-width: 220px;
+}
+
+.ersSvgBalloon {
+  width: 100%;
+  max-width: 220px;
+  height: auto;
+  overflow: visible;
+  display: block;
+  filter: drop-shadow(2px 6px 14px oklch(0.35 0.08 290 / 0.22));
+}
+
+.ersBalloonRise {
+  will-change: transform, opacity;
+  animation: ersBalloonRise var(--ers-rise-ms, 20000ms) cubic-bezier(0.22, 0.82, 0.22, 1) forwards;
+}
+
+@keyframes ersBalloonRise {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) rotate(-1deg);
+  }
+  15% {
+    transform: translate(var(--ers-wobble-1, 0px), -10vh) rotate(1deg);
+  }
+  40% {
+    transform: translate(var(--ers-wobble-2, 0px), -36vh) rotate(-0.5deg);
+  }
+  70% {
+    transform: translate(var(--ers-wobble-3, 0px), -62vh) scale(0.92)
+      rotate(0.45deg);
+    opacity: 0.94;
+  }
+  100% {
+    transform: translate(calc(var(--ers-wobble-3, 0px) * 0.35), -128vh)
+      scale(0.72);
+    opacity: 0;
+  }
+}
+
+.ersBalloonTextarea {
+  position: absolute;
+  left: 50%;
+  top: 26%;
+  transform: translateX(-50%);
+  width: 58%;
+  min-height: 68px;
+  max-height: 120px;
+  padding: 4px;
+  border: none;
+  background: transparent;
+  resize: none;
+  font-family: ui-serif, 'Songti SC', serif;
+  font-size: 13px;
+  line-height: 1.55;
+  text-align: center;
+  color: oklch(0.38 0.05 290);
+  outline: none;
+  z-index: 2;
+}
+
+.ersBalloonTextarea:disabled {
+  opacity: 0.92;
+}
+
+.ersSkyControls {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 12px 0 0;
+}
+
+.ersFadeMsg {
+  position: absolute;
+  left: 50%;
+  bottom: 12%;
+  transform: translateX(-50%);
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: oklch(0.22 0.04 260 / 0.68);
+  color: oklch(0.98 0 0);
+  font-size: 12px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.ersFadeMsg[data-show='true'] {
+  opacity: 1;
+}

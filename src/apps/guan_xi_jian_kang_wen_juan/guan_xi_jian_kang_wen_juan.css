@@ -1,0 +1,501 @@
+/* 关系健康问卷 — 类名前缀 rhq，避免污染全局 XP 外壳 */
+
+.rhqRoot {
+  box-sizing: border-box;
+  height: 100%;
+  overflow: auto;
+  padding: 0 12px 16px;
+  font-family:
+    'Segoe UI',
+    'PingFang SC',
+    'Microsoft YaHei',
+    Tahoma,
+    sans-serif;
+  color: #1a1a1a;
+  background: linear-gradient(180deg, #faf8fb 0%, #f5f2f8 100%);
+}
+
+.rhqRoot *,
+.rhqRoot *::before,
+.rhqRoot *::after {
+  box-sizing: border-box;
+}
+
+.rhqHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.rhqPage {
+  padding: 1.25rem 0;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.rhqProgWrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 1.35rem;
+}
+
+.rhqProgBg {
+  flex: 1;
+  height: 4px;
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 2px;
+}
+
+.rhqProgFill {
+  height: 100%;
+  background: #d4537e;
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.rhqProgTxt {
+  font-size: 12px;
+  color: #6b6570;
+  min-width: 44px;
+  text-align: right;
+}
+
+.rhqPrefRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: -0.35rem 0 1.1rem;
+  font-size: 12px;
+  color: #5c5560;
+  line-height: 1.45;
+  cursor: pointer;
+  user-select: none;
+}
+
+.rhqPrefRow input {
+  margin-top: 2px;
+  flex-shrink: 0;
+  accent-color: #d4537e;
+  cursor: pointer;
+}
+
+.rhqDimBadge {
+  font-size: 10px;
+  font-weight: 500;
+  padding: 3px 8px;
+  border-radius: 20px;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.rhqDimRespect {
+  background: #fbeaf0;
+  color: #72243e;
+}
+
+.rhqDimBoundary {
+  background: #eeedfe;
+  color: #3c3489;
+}
+
+.rhqDimGive {
+  background: #faeeda;
+  color: #633806;
+}
+
+.rhqDimSelf {
+  background: #e1f5ee;
+  color: #085041;
+}
+
+.rhqQNum {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.07em;
+  color: #6b6570;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.rhqQText {
+  font-size: 15px;
+  font-weight: 500;
+  color: #231f26;
+  line-height: 1.6;
+  margin-bottom: 1.15rem;
+}
+
+.rhqOpts {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.rhqOpt {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 0.5px solid rgba(0, 0, 0, 0.12);
+  border-radius: 10px;
+  cursor: pointer;
+  background: #fff;
+  transition:
+    border-color 0.15s,
+    background 0.15s;
+}
+
+.rhqOpt:hover {
+  border-color: rgba(0, 0, 0, 0.22);
+  background: #fbfafc;
+}
+
+.rhqOptSelected {
+  border-color: #ed93b1;
+  background: #fbeaf0;
+}
+
+.rhqOptDot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1.5px solid #a39aa8;
+  flex-shrink: 0;
+}
+
+.rhqOptSelected .rhqOptDot {
+  background: #d4537e;
+  border-color: #d4537e;
+}
+
+.rhqOptLabel {
+  font-size: 14px;
+  color: #231f26;
+}
+
+.rhqNav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1.5rem;
+}
+
+.rhqBtnBack {
+  font-size: 13px;
+  padding: 8px 16px;
+  border: 0.5px solid rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  background: transparent;
+  color: #5c5560;
+  cursor: pointer;
+}
+
+.rhqBtnBack:hover {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.rhqBtnNext {
+  font-size: 13px;
+  padding: 8px 20px;
+  border: 0.5px solid #ed93b1;
+  border-radius: 8px;
+  background: #d4537e;
+  color: #fbeaf0;
+  cursor: pointer;
+}
+
+.rhqBtnNext:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.rhqBtnNext:not(:disabled):hover {
+  filter: brightness(1.03);
+}
+
+/* —— 结果页 —— */
+
+.rhqResult {
+  animation: rhqFade 0.25s ease;
+}
+
+@keyframes rhqFade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.rhqResTitle {
+  font-size: 19px;
+  font-weight: 500;
+  color: #231f26;
+  margin-bottom: 6px;
+}
+
+.rhqResSub {
+  font-size: 13px;
+  color: #5c5560;
+  line-height: 1.6;
+  margin-bottom: 1.25rem;
+}
+
+.rhqOverallBand {
+  border-radius: 10px;
+  padding: 1rem 1.1rem;
+  margin-bottom: 1.15rem;
+}
+
+.rhqBandHealthy {
+  background: #e1f5ee;
+  border: 0.5px solid #5dcaa5;
+}
+
+.rhqBandCaution {
+  background: #faeeda;
+  border: 0.5px solid #ef9f27;
+}
+
+.rhqBandConcern {
+  background: #fbeaf0;
+  border: 0.5px solid #ed93b1;
+}
+
+.rhqBandTitle {
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.rhqBandHealthy .rhqBandTitle {
+  color: #085041;
+}
+
+.rhqBandCaution .rhqBandTitle {
+  color: #633806;
+}
+
+.rhqBandConcern .rhqBandTitle {
+  color: #72243e;
+}
+
+.rhqBandDesc {
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.rhqBandHealthy .rhqBandDesc {
+  color: #0f6e56;
+}
+
+.rhqBandCaution .rhqBandDesc {
+  color: #854f0b;
+}
+
+.rhqBandConcern .rhqBandDesc {
+  color: #993556;
+}
+
+.rhqDimGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 1.15rem;
+}
+
+.rhqDimCard {
+  background: #fff;
+  border: 0.5px solid rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 1rem 1.05rem;
+}
+
+.rhqDimCardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.rhqDimCardTitle {
+  font-size: 14px;
+  font-weight: 500;
+  color: #231f26;
+}
+
+.rhqDimScoreLabel {
+  font-size: 12px;
+  color: #6b6570;
+}
+
+.rhqBarWrap {
+  height: 5px;
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 3px;
+  margin-bottom: 8px;
+  overflow: hidden;
+}
+
+.rhqBarFill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.8s ease;
+}
+
+.rhqBarRespect {
+  background: #d4537e;
+}
+
+.rhqBarBoundary {
+  background: #7f77dd;
+}
+
+.rhqBarGive {
+  background: #ef9f27;
+}
+
+.rhqBarSelf {
+  background: #1d9e75;
+}
+
+.rhqDimInsight {
+  font-size: 13px;
+  color: #5c5560;
+  line-height: 1.55;
+}
+
+.rhqSuggestBox {
+  margin-top: 1.25rem;
+  background: #fbeaf0;
+  border: 0.5px solid #ed93b1;
+  border-radius: 10px;
+  padding: 1rem 1.1rem;
+}
+
+.rhqSuggestTitle {
+  font-size: 13px;
+  font-weight: 500;
+  color: #72243e;
+  margin-bottom: 8px;
+}
+
+.rhqSuggestItem {
+  font-size: 13px;
+  color: #993556;
+  line-height: 1.65;
+  padding-left: 12px;
+  position: relative;
+}
+
+.rhqSuggestItem::before {
+  content: '·';
+  position: absolute;
+  left: 0;
+}
+
+.rhqRestartBtn {
+  margin-top: 1.15rem;
+  font-size: 13px;
+  padding: 8px 18px;
+  border: 0.5px solid rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  background: transparent;
+  color: #5c5560;
+  cursor: pointer;
+}
+
+.rhqRestartBtn:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+/* 一页滑条作答 */
+.rhqSliderSheet {
+  max-height: min(62vh, 520px);
+  overflow: auto;
+  padding-right: 4px;
+  margin-bottom: 1rem;
+}
+
+.rhqSliderBlock {
+  padding: 12px 0 14px;
+  border-bottom: 0.5px solid rgba(0, 0, 0, 0.08);
+}
+
+.rhqSliderBlock:last-child {
+  border-bottom: none;
+}
+
+.rhqSliderBlockDone .rhqSliderCur {
+  color: #72243e;
+  font-weight: 600;
+}
+
+.rhqSliderMeta {
+  font-size: 11px;
+  color: #8a8290;
+  margin: 6px 0 4px;
+}
+
+.rhqSliderQ {
+  font-size: 13px;
+  line-height: 1.55;
+  color: #2e2830;
+  margin-bottom: 10px;
+}
+
+.rhqSliderRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.rhqSliderEnd {
+  font-size: 10px;
+  color: #8a8290;
+  flex-shrink: 0;
+  width: 28px;
+}
+
+.rhqSliderEnd:last-child {
+  text-align: right;
+}
+
+.rhqSliderInput {
+  flex: 1;
+  accent-color: #d4537e;
+  min-height: 28px;
+}
+
+.rhqSliderCur {
+  margin-top: 6px;
+  font-size: 12px;
+  color: #6b6570;
+}
+
+.rhqSliderSubmit {
+  width: 100%;
+  margin-top: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 11px 14px;
+  border-radius: 10px;
+  border: 0.5px solid rgba(212, 83, 126, 0.45);
+  background: linear-gradient(180deg, #fce4ec 0%, #f8d4e2 100%);
+  color: #72243e;
+  cursor: pointer;
+}
+
+.rhqSliderSubmit:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}

@@ -1,0 +1,112 @@
+/* 意象装饰层统一弱对比，不参与交互 */
+
+.fmDesktopDawn {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.fmQuizRibbon {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 1rem;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.58);
+  border: 0.5px solid rgba(200, 212, 220, 0.45);
+  box-shadow: 0 10px 32px rgba(80, 120, 140, 0.08);
+}
+
+.fmQuizRibbonText {
+  flex: 1;
+  min-width: 0;
+  font-size: 11.5px;
+  line-height: 1.55;
+  color: rgba(60, 68, 78, 0.78);
+}
+
+.fmBlogGlow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 100%, rgba(255, 200, 150, 0.16) 0%, transparent 52%),
+    radial-gradient(circle at 82% 12%, rgba(180, 200, 255, 0.18) 0%, transparent 38%),
+    radial-gradient(circle at 10% 20%, rgba(120, 200, 180, 0.1) 0%, transparent 35%);
+}
+
+.fmCrisisHeader {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+  border-radius: 16px;
+  background: rgba(255, 252, 248, 0.72);
+  border: 0.5px solid rgba(220, 200, 160, 0.35);
+  box-shadow: 0 14px 40px rgba(100, 80, 60, 0.08);
+}
+
+.fmCrisisHeaderCopy {
+  flex: 1;
+  min-width: 220px;
+  font-size: 13px;
+  line-height: 1.62;
+  color: #435048;
+}
+
+.fmCrisisHeaderEyebrow {
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #8f7d68;
+  margin-bottom: 4px;
+}
+
+.fmRpWeatherRow {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.fmRpWeatherSlot {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+
+.fmRpWeatherLabel {
+  font-size: 9px;
+  color: var(--rp-text-tertiary);
+  opacity: 0.85;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.fmRpMotifBleed {
+  position: absolute;
+  inset: -28% -8% auto -8%;
+  height: 120px;
+  pointer-events: none;
+  opacity: 0.45;
+  background:
+    radial-gradient(ellipse 50% 80% at 20% 50%, rgba(255, 200, 220, 0.35), transparent),
+    radial-gradient(ellipse 40% 70% at 75% 40%, rgba(200, 230, 255, 0.4), transparent),
+    radial-gradient(ellipse 35% 60% at 50% 60%, rgba(230, 255, 220, 0.25), transparent);
+  filter: blur(18px);
+}
+
+.fmRpScrollInnerFit {
+  position: relative;
+}
