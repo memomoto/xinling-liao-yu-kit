@@ -269,13 +269,13 @@
   min-height: 118px;
   padding: 12px 6px;
   box-sizing: border-box;
-  background: #fff;
-  border: none;
-  border-radius: 0 14px 14px 0;
+  background: linear-gradient(180deg, #faf6ee 0%, #ebe4d6 100%);
+  border: 1px solid rgba(58, 46, 37, 0.22);
+  border-left: none;
+  border-radius: 0 10px 10px 0;
   box-shadow:
-    -6px 4px 14px rgba(0, 0, 0, 0.14),
-    -2px 0 4px rgba(0, 0, 0, 0.06),
-    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+    -3px 3px 10px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.65);
   cursor: grab;
   color: inherit;
   font: inherit;
@@ -293,7 +293,7 @@
 
 .dw-edge-tab__icon {
   font-size: 1.15rem;
-  color: #4a4a4a;
+  color: #5c5348;
 }
 
 .dw-edge-tab__label {
@@ -301,7 +301,7 @@
   font-size: 0.68rem;
   font-weight: 600;
   line-height: 1.25;
-  color: #3a3a3a;
+  color: #4a4238;
   writing-mode: vertical-rl;
   text-orientation: mixed;
   letter-spacing: 0.02em;

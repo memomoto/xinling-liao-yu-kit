@@ -143,7 +143,14 @@ export function HealingPictureBookApp() {
 
       <div style={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
         {phase === 'playground' && (
-          <div style={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column' }}>
+          <div
+            style={{
+              flex: 1,
+              minHeight: 'min(440px, 60vh)',
+              display: 'flex',
+              flexDirection: 'column',
+            }}
+          >
             <DreamOrbitGarden selectedIds={selectedThemes} onToggleTheme={toggleTheme} />
           </div>
         )}

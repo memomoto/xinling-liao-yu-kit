@@ -4,8 +4,9 @@
 
 import { useMemo, useState } from 'react';
 
-const FONT =
-  '-apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif';
+import { PaperButton } from '@/components/ui';
+
+import './kind-boundary-exit.css';
 
 type Line = { text: string; tag: string };
 
@@ -43,17 +44,7 @@ function Chip({ active, label, onClick }: { active: boolean; label: string; onCl
     <button
       type="button"
       onClick={onClick}
-      style={{
-        padding: '6px 12px',
-        borderRadius: 999,
-        border: active ? '1px solid rgba(90,140,230,0.55)' : '1px solid rgba(180,192,218,0.45)',
-        background: active ? 'rgba(220,236,255,0.75)' : 'rgba(255,255,255,0.52)',
-        fontFamily: FONT,
-        fontSize: 12,
-        fontWeight: 600,
-        color: active ? 'rgba(32,54,112,0.9)' : 'rgba(62,74,96,0.75)',
-        cursor: 'pointer',
-      }}
+      className={`kbe-chip${active ? ' kbe-chip--active' : ''}`.trim()}
     >
       {label}
     </button>
@@ -84,112 +75,54 @@ export function KindBoundaryExitApp() {
   };
 
   return (
-    <div
-      style={{
-        fontFamily: FONT,
-        minHeight: 480,
-        padding: '16px 18px',
-        borderRadius: 12,
-        background: 'linear-gradient(170deg, #f7f8ff 0%, #eef3fa 100%)',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 12,
-      }}
-    >
+    <div className="kbe-root paper-app-surface">
       <header>
-        <h1 style={{ margin: '0 0 6px', fontSize: 17, fontWeight: 700, color: 'rgba(32,42,58,0.92)' }}>
-          讨好模式 · 紧急出口
-        </h1>
-        <p style={{ margin: 0, fontSize: 12.5, lineHeight: 1.55, color: 'rgba(58,70,90,0.72)' }}>
+        <h1 className="kbe-title">讨好模式 · 紧急出口</h1>
+        <p className="kbe-lead">
           需要「温柔但坚定」的时候可以来这里借一句话。话术不是应付别人，是给当下的自己一小块立足之地——按标签筛选或直接搜索。
         </p>
       </header>
 
       <input
         type="search"
+        className="kbe-search"
         value={q}
         onChange={(e) => setQ(e.target.value)}
         placeholder="搜索关键词……"
-        style={{
-          padding: '10px 14px',
-          borderRadius: 11,
-          border: '1px solid rgba(200,210,230,0.65)',
-          fontFamily: FONT,
-          fontSize: 13,
-          outline: 'none',
-          background: 'rgba(255,255,255,0.78)',
-        }}
       />
 
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, alignItems: 'center' }}>
+      <div className="kbe-chips">
         <Chip label="全部" active={tag == null} onClick={() => setTag(null)} />
         {tags.map((t) => (
           <Chip key={t} label={t} active={tag === t} onClick={() => setTag(tag === t ? null : t)} />
         ))}
       </div>
 
-      <div style={{ overflowY: 'auto', flex: 1, display: 'flex', flexDirection: 'column', gap: 10, paddingRight: 4 }}>
+      <div className="kbe-list paper-app-scroll">
         {filtered.map((item, idx) => (
-          <article
-            key={idx}
-            style={{
-              padding: '14px 14px',
-              borderRadius: 12,
-              background: 'rgba(255,255,255,0.72)',
-              border: '1px solid rgba(220,226,243,0.85)',
-              boxShadow: '0 6px 18px rgba(70,92,142,0.06)',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 8,
-            }}
-          >
-            <span style={{ fontSize: 11, fontWeight: 700, color: 'rgba(120,140,178,0.85)', letterSpacing: '0.04em' }}>
-              #{item.tag}
-            </span>
-            <p style={{ margin: 0, fontSize: 13.5, lineHeight: 1.62, color: 'rgba(35,46,62,0.9)' }}>{item.text}</p>
-            <button
-              type="button"
-              onClick={() => copyOne(item.text)}
-              style={{
-                alignSelf: 'flex-start',
-                padding: '6px 12px',
-                borderRadius: 8,
-                border: '1px solid rgba(160,190,240,0.55)',
-                background: 'rgba(235,244,255,0.9)',
-                fontFamily: FONT,
-                fontSize: 12,
-                fontWeight: 600,
-                cursor: 'pointer',
-                color: 'rgba(36,58,108,0.88)',
-              }}
-            >
-              复制这句话
-            </button>
-          </article>
+          <div key={`${item.tag}-${idx}`} className="kbe-entry">
+            <span className="kbe-tag">#{item.tag}</span>
+            <p className="kbe-text">{item.text}</p>
+            <div className="kbe-copy-row">
+              <PaperButton
+                type="button"
+                variant="secondary"
+                className="kbe-copy-btn"
+                onClick={() => copyOne(item.text)}
+              >
+                复制这句话
+              </PaperButton>
+            </div>
+          </div>
         ))}
-        {filtered.length === 0 && (
-          <p style={{ margin: '18px auto', fontSize: 13, color: 'rgba(90,100,120,0.65)' }}>没有匹配的句子，试试别的关键词～</p>
-        )}
+        {filtered.length === 0 ? <p className="kbe-empty">没有匹配的句子，试试别的关键词～</p> : null}
       </div>
 
-      {toast && (
-        <div
-          role="status"
-          style={{
-            position: 'sticky',
-            bottom: 10,
-            marginTop: -6,
-            padding: '8px 12px',
-            borderRadius: 10,
-            background: 'rgba(40,62,122,0.88)',
-            color: '#fafcff',
-            fontSize: 12,
-            textAlign: 'center',
-          }}
-        >
+      {toast ? (
+        <div className="kbe-toast" role="status">
           {toast}
         </div>
-      )}
+      ) : null}
     </div>
   );
 }

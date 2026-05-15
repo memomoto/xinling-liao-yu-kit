@@ -536,3 +536,5 @@ export function ComfortBuddyApp() {
     </DreamyContainer>
   );
 }
+
+export { COMFORT_BOOK_SNIPPETS } from './comfort-quotes';

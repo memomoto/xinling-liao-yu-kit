@@ -1,0 +1,159 @@
+/* 纸质 UI 组件 — 依赖 tokens.css 中的 --paper-* / --ink-* */
+
+.paper-btn {
+  position: relative;
+  margin: 0;
+  padding: 0.5rem 1.35rem;
+  font-family: var(--font-serif);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-tight);
+  border: 2px solid var(--_paper-btn-border, var(--ink-primary));
+  border-radius: 2px;
+  background: transparent;
+  color: var(--_paper-btn-fg, var(--ink-primary));
+  cursor: pointer;
+  box-shadow: var(--shadow-paper);
+  outline: none;
+  transition:
+    background var(--duration-fast) var(--easing-default),
+    color var(--duration-fast) var(--easing-default),
+    border-color var(--duration-fast) var(--easing-default),
+    box-shadow var(--duration-fast) var(--easing-default),
+    transform var(--duration-fast) var(--easing-default);
+}
+
+.paper-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.paper-btn:not(:disabled):hover {
+  background: var(--_paper-btn-border, var(--ink-primary));
+  color: var(--paper-bg);
+}
+
+.paper-btn:not(:disabled):active {
+  box-shadow: var(--shadow-pressed);
+  transform: translateY(1px);
+}
+
+.paper-btn--primary {
+  --_paper-btn-border: var(--ink-primary);
+  --_paper-btn-fg: var(--ink-primary);
+}
+
+.paper-btn--secondary {
+  --_paper-btn-border: var(--ink-secondary);
+  --_paper-btn-fg: var(--ink-secondary);
+}
+
+.paper-btn--danger {
+  --_paper-btn-border: var(--ink-accent);
+  --_paper-btn-fg: var(--ink-accent);
+}
+
+.paper-btn__label {
+  letter-spacing: 0.12em;
+}
+
+/* --- PaperCard --- */
+
+.paper-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 2px;
+  font-family: var(--font-serif);
+  color: var(--ink-primary);
+  background-color: var(--paper-fg);
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.35) 0%, transparent 42%);
+}
+
+.paper-card--flat {
+  border: 1px solid var(--paper-border-soft);
+  box-shadow: none;
+}
+
+.paper-card--raised {
+  border: 1px solid var(--paper-border);
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+.paper-card--floating {
+  border: 1px solid color-mix(in srgb, var(--paper-border) 85%, var(--wood-dark));
+  box-shadow:
+    2px 5px 12px rgba(0, 0, 0, 0.12),
+    0 0 0 1px rgba(58, 46, 37, 0.04);
+}
+
+/* --- PaperInput --- */
+
+.paper-input-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-bottom: var(--space-4);
+}
+
+.paper-input-wrap:last-child {
+  margin-bottom: 0;
+}
+
+.paper-input-label {
+  font-family: var(--font-serif);
+  font-size: var(--font-size-sm);
+  color: var(--ink-secondary);
+  letter-spacing: 0.08em;
+}
+
+.paper-input {
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  padding: var(--space-2) var(--space-1);
+  font-family: var(--font-serif);
+  font-size: var(--font-size-md);
+  color: var(--ink-primary);
+  background: transparent;
+  border: none;
+  border-bottom: 2px dashed #b8b3a5;
+  border-radius: 0;
+  outline: none;
+  transition: border-color var(--duration-normal) var(--easing-default);
+}
+
+.paper-input::placeholder {
+  color: var(--paper-placeholder);
+}
+
+.paper-input:focus {
+  border-bottom-color: var(--ink-accent);
+}
+
+/* --- PaperTextarea --- */
+
+.paper-textarea {
+  --paper-ta-line: 32px;
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 200px;
+  margin: 0;
+  padding: 2px 4px 8px;
+  resize: none;
+  overflow: hidden;
+  font-family: var(--font-serif);
+  font-size: var(--font-size-md);
+  line-height: var(--paper-ta-line);
+  color: var(--ink-primary);
+  background: transparent;
+  background-image: linear-gradient(transparent calc(var(--paper-ta-line) - 1px), var(--paper-line) calc(var(--paper-ta-line) - 1px));
+  background-size: 100% var(--paper-ta-line);
+  border: none;
+  border-radius: 0;
+  outline: none;
+}
+
+.paper-textarea::placeholder {
+  color: var(--paper-placeholder);
+}

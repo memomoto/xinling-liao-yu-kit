@@ -1,0 +1,185 @@
+/* 书桌上的小平板 + 居中放大的 iPad 壳（无键盘） */
+
+.hts-desk-tablet-spacer {
+  width: min(380px, 84vw);
+  height: min(248px, 34vh);
+  min-height: 200px;
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+.hts-desk-tablet-closed {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: min(380px, 84vw);
+  height: min(248px, 34vh);
+  min-height: 200px;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  box-sizing: border-box;
+  background: linear-gradient(180deg, #333c47 0%, #2c353e 45%, #2a3340 100%);
+  border-radius: 1.15rem;
+  border: none;
+  box-shadow:
+    0 0 0 12px #fdfdfd,
+    0 0 0 14px rgba(230, 210, 222, 0.35),
+    0 10px 24px rgba(216, 191, 216, 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease;
+  font-family: var(--font-sans, system-ui, sans-serif);
+}
+
+.hts-desk-tablet-closed:hover {
+  transform: scale(1.04);
+  box-shadow:
+    0 0 0 12px #fdfdfd,
+    0 0 0 14px rgba(230, 210, 222, 0.45),
+    0 12px 28px rgba(216, 191, 216, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+
+.hts-desk-tablet-closed:focus-visible {
+  outline: 2px solid rgba(214, 180, 120, 0.85);
+  outline-offset: 4px;
+}
+
+/* 顶边听筒缝 */
+.hts-desk-tablet-slit {
+  position: absolute;
+  top: -10px;
+  right: 22%;
+  width: 2.5rem;
+  height: 4px;
+  border-radius: 4px 4px 0 0;
+  background: linear-gradient(180deg, #d8d4dc, #b8b2bc);
+  pointer-events: none;
+}
+
+.hts-desk-tablet-hint {
+  color: rgba(218, 220, 230, 0.92);
+  font-size: 13px;
+  letter-spacing: 0.32em;
+  text-indent: 0.32em;
+  line-height: 1.4;
+  text-align: center;
+  padding: 0 12px;
+}
+
+/* 全屏遮罩 + 约 85vw × 90vh 平板壳 */
+.hts-tablet-modal-root {
+  position: fixed;
+  inset: 0;
+  z-index: 2147482000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: max(12px, 2vmin);
+  box-sizing: border-box;
+  background: rgba(0, 0, 0, 0.58);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.hts-tablet-modal-shell {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: min(90vw, 1740px);
+  height: min(92dvh, 1040px);
+  max-height: 92dvh;
+  background: #2f3842;
+  border: 18px solid #fdfdfd;
+  border-radius: 2rem;
+  box-shadow:
+    0 32px 80px rgba(216, 191, 216, 0.35),
+    0 14px 32px rgba(180, 160, 190, 0.15),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.72);
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* 前置相机点 */
+.hts-tablet-modal-sensor {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #5a6270, #3a424c);
+  z-index: 50;
+  pointer-events: none;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+.hts-tablet-modal-screen {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+  margin-top: 26px;
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 0;
+  border-radius: 0 0 1.2rem 1.2rem;
+  background: linear-gradient(180deg, #1e2430 0%, #141820 100%);
+  overflow: hidden;
+}
+
+/* 屏内仿 Mac：列方向铺满，避免高度塌陷导致“点开只有黑框” */
+.hts-tablet-modal-screen .rds-screen-surface {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  transform: translateZ(0);
+  isolation: isolate;
+}
+
+.hts-tablet-mac-fill {
+  display: flex;
+  flex-direction: column;
+  background: #0b1520;
+  min-height: 100%;
+  height: 100%;
+}
+
+.hts-tablet-modal-close {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  z-index: 2147482100;
+  border: none;
+  cursor: pointer;
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei',
+    sans-serif;
+  color: rgba(73, 58, 66, 0.95);
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow:
+    0 6px 18px rgba(216, 191, 216, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.65);
+  transition:
+    background 0.15s ease,
+    transform 0.12s ease;
+}
+
+.hts-tablet-modal-close:hover {
+  background: rgba(250, 220, 230, 0.95);
+  color: rgba(90, 50, 70, 0.95);
+}
+
+.hts-tablet-modal-close:active {
+  transform: scale(0.97);
+}

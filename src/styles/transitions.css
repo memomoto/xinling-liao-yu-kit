@@ -1,0 +1,121 @@
+/*
+ * 主题与转场、弱设备 / prefers-reduced-motion 降级。
+ * `.perf-mode` 由 perf-detector 在 <html> 上添加。
+ */
+
+[data-theme],
+.theme-paper,
+.theme-dark {
+  transition:
+    background-color var(--duration-slow) var(--easing-default),
+    color var(--duration-slow) var(--easing-default),
+    border-color var(--duration-slow) var(--easing-default);
+}
+
+.page-transition-enter {
+  opacity: 0;
+  transform: translateY(12px) scale(0.99);
+}
+.page-transition-enter-active {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity var(--duration-normal) var(--easing-default),
+    transform var(--duration-normal) var(--easing-default);
+}
+.page-transition-exit {
+  opacity: 1;
+  transform: none;
+}
+.page-transition-exit-active {
+  opacity: 0;
+  transform: translateY(-8px) scale(0.99);
+  transition:
+    opacity var(--duration-fast) var(--easing-default),
+    transform var(--duration-fast) var(--easing-default);
+}
+
+.scene-transition-book-open {
+  animation: bookOpen var(--duration-slow) var(--easing-spring) forwards;
+}
+@keyframes bookOpen {
+  0% {
+    opacity: 1;
+    transform: perspective(1200px) rotateY(0deg);
+  }
+  50% {
+    opacity: 0.6;
+    transform: perspective(1200px) rotateY(-15deg);
+  }
+  100% {
+    opacity: 1;
+    transform: perspective(1200px) rotateY(0deg);
+  }
+}
+
+.scene-transition-book-close {
+  animation: bookClose var(--duration-slow) var(--easing-spring) forwards;
+}
+@keyframes bookClose {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  40% {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .book-3d {
+    transform: none !important;
+  }
+}
+
+.perf-mode .balloon,
+.perf-mode .lamp-glow,
+.perf-mode .balloon-wrap,
+.perf-mode [class*='particle'],
+.perf-mode [class*='sparkle'] {
+  display: none !important;
+}
+
+.perf-mode .book-3d {
+  transform: none !important;
+  box-shadow: var(--shadow-md) !important;
+}
+
+.perf-mode .dco-xiaonuan-fig-btn {
+  animation: none !important;
+  filter: drop-shadow(1px 4px 6px rgba(0, 0, 0, 0.28)) !important;
+}
+
+.perf-mode * {
+  animation-play-state: paused !important;
+  transition-duration: var(--duration-fast) !important;
+}
+
+@media (max-height: 500px) {
+  .balloon,
+  .lamp-glow,
+  .balloon-wrap,
+  [class*='ambient'] {
+    display: none;
+  }
+  .bookshelf-room {
+    padding-top: var(--space-4);
+  }
+}

@@ -1,0 +1,327 @@
+/**
+ * 书页内「物理化」交互：有序列表多选、墨绿下划线、横线稿纸输入、纸质按钮。
+ * 仅在包裹了 .isr-paper-surface 的容器内使用或作为覆盖层。
+ */
+
+/* ========== 多选：印在纸上的序号列表 + 选中墨线 ========== */
+.isr-paper-multi__legend {
+  margin: 0 0 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #5d4037;
+  font-family: 'Noto Serif SC', 'PingFang SC', serif;
+}
+
+.isr-paper-multi__list {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 0;
+}
+
+.isr-paper-multi__item {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  margin: 0;
+  padding: 14px 8px;
+  cursor: pointer;
+  color: #5d4037;
+  font-size: 1rem;
+  line-height: 1.55;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+  transition: background 0.25s;
+  position: relative;
+  font-family: 'Noto Serif SC', 'PingFang SC', serif;
+  text-align: left;
+  background: transparent;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.isr-paper-multi__item:hover {
+  background: rgba(215, 204, 200, 0.12);
+}
+
+.isr-paper-multi__num {
+  font-weight: 700;
+  margin-right: 14px;
+  min-width: 1.6em;
+  color: #8d6e63;
+  font-variant-numeric: tabular-nums;
+}
+
+.isr-paper-multi__text {
+  flex: 1;
+  position: relative;
+  padding-bottom: 2px;
+}
+
+.isr-paper-multi__item--selected .isr-paper-multi__text {
+  color: #2e7d32;
+  font-weight: 700;
+}
+
+.isr-paper-multi__item--selected .isr-paper-multi__text::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 3px;
+  background: linear-gradient(120deg, transparent 6%, #66bb6a 10% 90%, transparent 94%);
+  border-radius: 3px;
+  opacity: 0.82;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+/* ========== 单行 / 多行：作文纸横线 ========== */
+.isr-paper-lined {
+  --isr-paper-line: 1.65rem;
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 0;
+  background-color: transparent;
+  color: #3e2723;
+  font-family: 'Noto Serif SC', 'PingFang SC', 'STKaiti', KaiTi, serif;
+  font-size: 15px;
+  line-height: var(--isr-paper-line);
+  padding: 0.15rem 6px 0.2rem;
+  resize: vertical;
+  min-height: calc(var(--isr-paper-line) * 4);
+  background-image: repeating-linear-gradient(
+    transparent,
+    transparent calc(var(--isr-paper-line) - 1px),
+    rgba(93, 64, 55, 0.14) calc(var(--isr-paper-line) - 1px),
+    rgba(93, 64, 55, 0.14) var(--isr-paper-line)
+  );
+  background-attachment: local;
+}
+
+.isr-paper-lined:focus {
+  outline: none;
+  background-color: rgba(255, 251, 245, 0.35);
+}
+
+.isr-paper-lined--single {
+  min-height: calc(var(--isr-paper-line) * 1.35);
+  resize: none;
+  background-image: linear-gradient(
+    transparent calc(var(--isr-paper-line) - 2px),
+    rgba(93, 64, 55, 0.22) calc(var(--isr-paper-line) - 2px),
+    rgba(93, 64, 55, 0.22) calc(var(--isr-paper-line) - 1px),
+    transparent calc(var(--isr-paper-line) - 1px)
+  );
+}
+
+.isr-paper-field-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #6d4c41;
+  margin-bottom: 6px;
+  font-family: 'Noto Serif SC', serif;
+}
+
+/* ========== 纸质主按钮 / 次按钮 ========== */
+.isr-paper-ink-btn {
+  cursor: pointer;
+  padding: 10px 22px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'Noto Serif SC', 'PingFang SC', serif;
+  color: #faf6f0;
+  background: linear-gradient(180deg, #5d4037 0%, #4a342c 100%);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  box-shadow:
+    inset 1px 1px 0 rgba(255, 255, 255, 0.15),
+    0 4px 12px rgba(0, 0, 0, 0.12);
+  letter-spacing: 0.04em;
+}
+
+.isr-paper-ink-btn:hover {
+  filter: brightness(1.05);
+}
+
+.isr-paper-ink-btn:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.isr-paper-washi-btn {
+  cursor: pointer;
+  padding: 9px 18px;
+  font-size: 13px;
+  font-family: 'Noto Serif SC', 'PingFang SC', serif;
+  color: #4e342e;
+  background: rgba(255, 250, 242, 0.65);
+  border: 1px solid rgba(93, 64, 55, 0.25);
+  border-radius: 4px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.isr-paper-washi-btn:hover {
+  background: rgba(255, 252, 246, 0.9);
+}
+
+/* ========== 嵌套模块：弱化「卡片网页感」========== */
+.isr-paper-surface .gtRoot {
+  background: transparent !important;
+  padding: 4px 2px 12px !important;
+}
+
+.isr-paper-surface .gtCard {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+}
+
+.isr-paper-surface .gtTitle,
+.isr-paper-surface .gtEyebrow {
+  font-family: 'Noto Serif SC', 'PingFang SC', serif;
+}
+
+.isr-paper-surface .gtEmergency {
+  background: rgba(93, 64, 55, 0.06) !important;
+  border: 1px dashed rgba(93, 64, 55, 0.2) !important;
+  color: #5d4037 !important;
+}
+
+.isr-paper-surface textarea.gtArea {
+  border: none !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: #3e2723 !important;
+  box-shadow: none !important;
+  --isr-pg-line: 1.55rem;
+  line-height: var(--isr-pg-line);
+  padding: 0.2rem 6px !important;
+  min-height: calc(var(--isr-pg-line) * 6);
+  font-family: 'Noto Serif SC', 'STKaiti', KaiTi, serif !important;
+  background-image: repeating-linear-gradient(
+    transparent,
+    transparent calc(var(--isr-pg-line) - 1px),
+    rgba(93, 64, 55, 0.12) calc(var(--isr-pg-line) - 1px),
+    rgba(93, 64, 55, 0.12) var(--isr-pg-line)
+  ) !important;
+  background-attachment: local;
+}
+
+.isr-paper-surface textarea.gtArea:focus {
+  border: none !important;
+  box-shadow: none !important;
+  background-color: rgba(255, 251, 245, 0.4) !important;
+}
+
+.isr-paper-surface .gtBtnPrimary {
+  background: linear-gradient(180deg, #5d4037 0%, #3e2723 100%) !important;
+  color: #faf6f0 !important;
+  border-radius: 4px !important;
+  border: 1px solid rgba(0, 0, 0, 0.18) !important;
+  box-shadow:
+    inset 1px 1px 0 rgba(255, 255, 255, 0.12),
+    0 4px 14px rgba(0, 0, 0, 0.12) !important;
+}
+
+.isr-paper-surface .gtBtnGhost {
+  background: rgba(255, 252, 248, 0.75) !important;
+  border: 1px solid rgba(93, 64, 55, 0.22) !important;
+  color: #4e342e !important;
+  border-radius: 4px !important;
+}
+
+/* 通用：落在书页里的原生控件收边（不删标签，只降「网页感」） */
+.isr-paper-surface select {
+  appearance: none;
+  -webkit-appearance: none;
+  font-family: 'Noto Serif SC', 'PingFang SC', serif;
+  font-size: 13px;
+  color: #3e2723;
+  padding: 8px 32px 8px 10px;
+  border-radius: 2px;
+  border: none;
+  border-bottom: 2px solid rgba(93, 64, 55, 0.35);
+  background:
+    linear-gradient(135deg, transparent 50%, rgba(93, 64, 55, 0.4) 52%) no-repeat calc(100% - 10px) 55% / 8px 8px,
+    rgba(255, 252, 246, 0.5);
+}
+
+.isr-paper-surface input[type='text'],
+.isr-paper-surface input[type='search'],
+.isr-paper-surface input[type='number'],
+.isr-paper-surface input[type='email'] {
+  font-family: 'Noto Serif SC', 'PingFang SC', serif;
+  border: none;
+  border-bottom: 1px solid rgba(93, 64, 55, 0.28);
+  background: transparent;
+  padding: 6px 4px;
+  font-size: 14px;
+  color: #3e2723;
+  border-radius: 0;
+}
+
+.isr-paper-surface input[type='text']:focus,
+.isr-paper-surface input[type='search']:focus {
+  outline: none;
+  border-bottom-color: rgba(46, 125, 50, 0.45);
+}
+
+/* 复选：藏起方框，用整行 + 墨线（需配合 label 结构） */
+.isr-paper-surface input[type='checkbox'] {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+}
+
+.isr-paper-surface label:has(> input[type='checkbox']) {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 6px;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  font-family: 'Noto Serif SC', serif;
+  font-size: 14px;
+  color: #5d4037;
+}
+
+.isr-paper-surface label:has(> input[type='checkbox']:checked) {
+  font-weight: 700;
+  color: #2e7d32;
+}
+
+.isr-paper-surface label:has(> input[type='checkbox']:checked)::after {
+  content: '';
+  flex: 1;
+  margin-left: 8px;
+  align-self: flex-end;
+  min-width: 40px;
+  height: 3px;
+  background: linear-gradient(120deg, transparent 10%, #66bb6a 15% 85%, transparent 90%);
+  border-radius: 2px;
+  opacity: 0.75;
+  margin-bottom: 3px;
+}
+
+@supports not selector(:has(*)) {
+  .isr-paper-surface input[type='checkbox'] {
+    position: static;
+    opacity: 1;
+    width: auto;
+    height: auto;
+    pointer-events: auto;
+    accent-color: #2e7d32;
+  }
+}
+
+.isr-paper-surface button:not([class*='fa-']):not([class^='isr-pf-']):not([class^='dco-']) {
+  font-family: 'Noto Serif SC', 'PingFang SC', serif;
+}

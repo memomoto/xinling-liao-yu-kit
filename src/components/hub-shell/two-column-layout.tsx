@@ -1,5 +1,7 @@
 import type { ReactNode } from 'react';
 
+import './two-column-layout.css';
+
 type TwoColumnLayoutProps = {
   sidebar: ReactNode;
   content: ReactNode;
@@ -7,9 +9,6 @@ type TwoColumnLayoutProps = {
   /** 默认 true：内容区再套一层 maxWidth 640 居中；博客阅读等可设为 false */
   constrainContentWidth?: boolean;
 };
-
-const BORDER = '1px solid rgba(212, 184, 192, 0.85)';
-const SIDEBAR_BG = 'rgba(255, 240, 245, 0.72)';
 
 export function TwoColumnLayout({
   sidebar,
@@ -19,52 +18,18 @@ export function TwoColumnLayout({
 }: TwoColumnLayoutProps) {
   const isWide = windowWidth > 700;
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: isWide ? 'row' : 'column',
-        flex: 1,
-        minHeight: 0,
-        height: '100%',
-        overflow: 'hidden',
-      }}
-    >
+    <div className={`tcl-shell ${isWide ? 'tcl-shell--row' : 'tcl-shell--col'}`}>
       <div
-        style={{
-          width: isWide ? 180 : '100%',
-          maxHeight: isWide ? '100%' : 220,
-          height: isWide ? '100%' : 'auto',
-          borderRight: isWide ? BORDER : 'none',
-          borderBottom: isWide ? 'none' : BORDER,
-          overflowY: 'auto',
-          flexShrink: 0,
-          background: SIDEBAR_BG,
-          boxSizing: 'border-box',
-        }}
+        className={`tcl-sidebar paper-app-surface paper-app-scroll ${isWide ? 'tcl-sidebar--row' : 'tcl-sidebar--col'}`}
       >
         {sidebar}
       </div>
-      <div
-        style={{
-          flex: 1,
-          minHeight: 0,
-          overflow: 'hidden',
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-      >
-        <div
-          style={{
-            flex: 1,
-            overflowY: 'auto',
-            padding: isWide ? '24px 28px' : '16px',
-            minHeight: 0,
-          }}
-        >
+      <div className="tcl-main">
+        <div className="tcl-scroll paper-app-scroll">
           {constrainContentWidth ? (
-            <div style={{ maxWidth: 640, margin: '0 auto', width: '100%' }}>{content}</div>
+            <div className="tcl-inner">{content}</div>
           ) : (
-            content
+            <div className="tcl-inner tcl-inner--full">{content}</div>
           )}
         </div>
       </div>

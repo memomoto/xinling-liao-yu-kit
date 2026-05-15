@@ -1,3 +1,5 @@
+@import 'tailwindcss';
+
 *,
 *::before,
 *::after {
@@ -13,5 +15,10 @@ body,
 }
 
 body {
-  background: #0f1115;
+  background: var(--color-bg-base);
+  color: var(--color-ink-primary);
+  font-family: var(--font-sans);
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-normal);
+  -webkit-font-smoothing: antialiased;
 }

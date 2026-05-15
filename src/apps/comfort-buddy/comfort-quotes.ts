@@ -57,6 +57,9 @@ export const COMFORT_QUOTES: ComfortQuote[] = [
   { text: '你读过的书、哭过的夜，都不会白费；它们悄悄长成了你理解自己的语言。', note: '成长叙事' },
 ];
 
+/** 纯书摘正文列表（与 COMFORT_QUOTES 一一对应，供收音机之类仅要一句话的场景） */
+export const COMFORT_BOOK_SNIPPETS: readonly string[] = COMFORT_QUOTES.map((q) => q.text);
+
 const ACK_SNIPPETS = [
   '收到啦，我没法逐句读懂，但想分享一句给你：',
   '嗯嗯，先抱抱你～今天随机翻开这一页：',

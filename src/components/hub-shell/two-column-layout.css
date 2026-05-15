@@ -1,0 +1,82 @@
+/**
+ * 双栏枢纽：侧栏与主内容同属「书房」语义，避免左粉右纸的割裂（仅样式）。
+ */
+
+.tcl-shell {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+.tcl-shell--row {
+  flex-direction: row;
+}
+
+.tcl-shell--col {
+  flex-direction: column;
+}
+
+.tcl-sidebar {
+  flex-shrink: 0;
+  overflow-y: auto;
+  box-sizing: border-box;
+  background: linear-gradient(175deg, color-mix(in srgb, var(--paper-bg) 55%, var(--wood-dark) 45%) 0%, var(--wood-dark) 100%);
+  border-color: color-mix(in srgb, var(--paper-border) 35%, var(--wood-dark));
+  border-style: solid;
+  border-width: 0;
+  box-shadow: inset -3px 0 12px rgba(0, 0, 0, 0.18);
+}
+
+.tcl-sidebar--row {
+  width: 180px;
+  max-height: 100%;
+  height: 100%;
+  border-right-width: 1px;
+}
+
+.tcl-sidebar--col {
+  width: 100%;
+  max-height: 220px;
+  height: auto;
+  border-bottom-width: 1px;
+  border-right-width: 0;
+}
+
+.tcl-main {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.tcl-scroll {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-6) var(--space-6);
+  background: color-mix(in srgb, var(--paper-bg) 94%, white);
+}
+
+.tcl-shell--col .tcl-scroll {
+  padding: var(--space-4);
+}
+
+.tcl-inner {
+  max-width: 640px;
+  margin: 0 auto;
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.tcl-inner--full {
+  max-width: none;
+}

@@ -7,12 +7,15 @@ import { APP_REGISTRY } from '../apps/registry';
 
 export type RegisteredAppProps = {
   id: string;
+  /** 与主站一致：需同步最小化态的应用可接收 */
+  windowMinimized?: boolean;
   remountKey?: number | string;
 };
 
 const FALLBACK_FONT = '"PingFang SC", "Microsoft YaHei", system-ui, sans-serif';
 
-export function RegisteredApp({ id, remountKey = 0 }: RegisteredAppProps) {
+export function RegisteredApp({ id, windowMinimized = false, remountKey = 0 }: RegisteredAppProps) {
+  void windowMinimized;
   const app = APP_REGISTRY[id];
   if (app) {
     const { AppComponent } = app;
