@@ -1,0 +1,121 @@
+/* 自站点 global.css 抽取：macOS 窗口与菜单视觉 */
+.mac-os-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(120, 120, 140, 0.45) transparent;
+}
+
+.mac-os-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.mac-os-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(120, 120, 140, 0.42);
+  border-radius: 8px;
+}
+
+.mac-os-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(140, 140, 165, 0.55);
+}
+
+.mac-menubar-faux-item {
+  font-size: 13px;
+  line-height: 1;
+  color: rgb(42 43 46 / 92%);
+  white-space: nowrap;
+  padding: 3px 9px;
+  border-radius: 5px;
+  transition:
+    background-color 120ms ease,
+    color 120ms ease;
+}
+
+.mac-menubar-faux-item:hover {
+  background-color: rgb(0 0 0 / 5.5%);
+  color: rgb(15 17 21 / 95%);
+}
+
+.mac-menubar-widget-hit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  cursor: default;
+  color: rgb(40 43 52 / 90%);
+  transition:
+    background-color 140ms ease,
+    color 140ms ease,
+    transform 160ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.mac-menubar-widget-hit:hover:not(:disabled) {
+  background-color: rgb(0 0 0 / 7%);
+}
+
+button.mac-menubar-widget-hit {
+  cursor: pointer;
+}
+
+/* Radix 右键菜单 — 不用 Tailwind */
+.mac-cm-content {
+  z-index: 210000;
+  min-width: 10rem;
+  border-radius: 10px;
+  padding: 6px;
+  background: rgba(252, 252, 254, 0.96);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow:
+    0 16px 48px rgba(20, 30, 50, 0.18),
+    0 0 0 0.5px rgba(255, 255, 255, 0.6) inset;
+  font-size: 13px;
+  color: rgba(30, 32, 42, 0.95);
+  animation: macCmIn 0.14s ease-out;
+}
+
+@keyframes macCmIn {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.mac-cm-item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 10px;
+  margin: 1px 0;
+  background: transparent;
+  cursor: default;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  outline: none;
+}
+
+.mac-cm-item[data-highlighted] {
+  background: rgba(90, 140, 255, 0.16);
+}
+
+.mac-cm-item--destructive {
+  color: #c62828;
+}
+
+.mac-cm-item--destructive[data-highlighted] {
+  background: rgba(198, 40, 40, 0.1);
+}
+
+.mac-cm-sep {
+  height: 1px;
+  margin: 4px 6px;
+  background: rgba(0, 0, 0, 0.08);
+}

@@ -1,0 +1,333 @@
+/* 书房互动：墙面隔板小暖 · 窗外气球 · 桌沿碎纸机 · 弹窗 */
+
+.dco-interactive {
+  pointer-events: auto;
+}
+
+/* —— 墙面悬浮隔板上的小暖：固定占位，对话气泡绝对定位不撑开布局 —— */
+.dco-xiaonuan-wall {
+  position: absolute;
+  left: 50%;
+  bottom: 15px;
+  transform: translateX(-50%);
+  width: 72px;
+  height: 72px;
+  z-index: 3;
+  pointer-events: auto;
+}
+
+/* 矢量玩偶：更接近 mock「左上落位」，略增高以容纳全身比例 */
+.dco-xiaonuan-wall--plush {
+  left: clamp(10px, 16%, 20px);
+  bottom: clamp(6px, 3%, 10px);
+  transform: none;
+  width: 88px;
+  height: 102px;
+}
+
+.dco-xiaonuan-wall--plush .dco-xiaonuan-fig-btn {
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+  animation: none;
+  filter: drop-shadow(2px 8px 10px rgba(216, 191, 216, 0.42));
+}
+
+.dco-xiaonuan-fig-btn {
+  width: 72px;
+  height: 72px;
+  border: none;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  animation: dco-float 4.2s ease-in-out infinite;
+  filter: drop-shadow(2px 8px 12px rgba(216, 191, 216, 0.38));
+  border-radius: 12px;
+  display: block;
+}
+
+.dco-xiaonuan-fig-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  display: block;
+}
+
+.dco-xiaonuan-fig-fallback {
+  font-size: 42px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+}
+
+.dco-bubble {
+  position: absolute;
+  z-index: 50;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  width: max-content;
+  min-width: 118px;
+  max-width: 220px;
+  padding: 9px 11px;
+  background: linear-gradient(180deg, #fdf9f2 0%, #f2ebe0 100%);
+  border: 1px solid rgba(139, 58, 58, 0.22);
+  border-radius: 4px 12px 10px 4px;
+  box-shadow: var(--shadow-paper, 1px 2px 4px rgba(0, 0, 0, 0.1));
+  font-size: 12px;
+  line-height: 1.45;
+  color: #3a3530;
+  font-family: 'Noto Serif SC', 'PingFang SC', serif;
+  animation: dco-pop 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  pointer-events: none;
+}
+
+.dco-bubble::after {
+  content: '';
+  position: absolute;
+  left: 18px;
+  bottom: -7px;
+  border: 7px solid transparent;
+  border-top-color: #f2ebe0;
+}
+
+/* —— 碎纸机（书桌右下角） —— */
+.dco-shred-wrap--desk {
+  position: absolute;
+  right: 3%;
+  bottom: 8%;
+  z-index: 8;
+  pointer-events: auto;
+}
+.dco-paper {
+  position: absolute;
+  bottom: 76px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 92px;
+  min-height: 100px;
+  max-height: 120px;
+  padding: 8px;
+  background: #fff9c4;
+  box-shadow: 0 -4px 14px rgba(216, 191, 216, 0.35);
+  font-size: 11px;
+  line-height: 1.4;
+  color: #4e342e;
+  overflow: hidden;
+  z-index: 4;
+  transition: transform 1.85s cubic-bezier(0.45, 0, 0.2, 1);
+}
+.dco-paper--in {
+  transform: translateX(-50%) translateY(130px);
+}
+.dco-shredder {
+  position: relative;
+  z-index: 6;
+  width: 96px;
+  height: 64px;
+  border-radius: 9px;
+  cursor: pointer;
+  border: none;
+  padding: 6px 4px 8px;
+  background: linear-gradient(180deg, #fdfcfb 0%, #f5f3f7 52%, #eee9f2 100%);
+  box-shadow:
+    0 8px 20px rgba(216, 191, 216, 0.36),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 -3px 6px rgba(216, 191, 216, 0.12);
+  color: rgba(123, 110, 120, 0.94);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 2px;
+  font-size: 8px;
+  letter-spacing: 0.02em;
+}
+.dco-shredder:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.dco-shredder-slot {
+  width: 72px;
+  height: 5px;
+  background: linear-gradient(180deg, #9aa2ad 0%, #6f7782 100%);
+  border-radius: 3px;
+  margin-top: 4px;
+  box-shadow:
+    inset 0 2px 4px rgba(45, 50, 58, 0.35),
+    0 1px 2px rgba(255, 255, 255, 0.5);
+}
+.dco-shred-icon {
+  font-size: 11px;
+  margin-bottom: 1px;
+}
+
+.dco-chips {
+  position: absolute;
+  left: 50%;
+  bottom: 48px;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 40px;
+  pointer-events: none;
+  z-index: 3;
+}
+.dco-chip {
+  position: absolute;
+  left: 50%;
+  width: 7px;
+  height: 12px;
+  background: linear-gradient(90deg, #ffeb3b, #fff59d);
+  border-radius: 1px;
+  opacity: 0;
+  animation: dco-chip 0.9s ease-out forwards;
+}
+
+/* —— 弹窗 —— */
+.dco-modal-back {
+  position: fixed;
+  inset: 0;
+  z-index: 20000;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+.dco-modal {
+  width: min(320px, 100%);
+  padding: 18px;
+  border-radius: 14px;
+  background: rgba(255, 253, 250, 0.96);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.42);
+  animation: dco-pop 0.28s ease;
+}
+.dco-modal h3 {
+  margin: 0 0 12px;
+  font-size: 15px;
+  color: #333;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  padding-bottom: 8px;
+  font-family: 'Noto Serif SC', serif;
+}
+.dco-modal textarea {
+  width: 100%;
+  min-height: 92px;
+  padding: 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  resize: vertical;
+  font-size: 13px;
+  margin-bottom: 12px;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+.dco-modal textarea:focus {
+  outline: none;
+  border-color: #f48fb1;
+  box-shadow: 0 0 0 2px rgba(244, 143, 177, 0.25);
+}
+.dco-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+.dco-modal-actions button {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+}
+.dco-btn-ghost {
+  background: #f5f5f5;
+  color: #616161;
+}
+.dco-btn-primary {
+  background: #212121;
+  color: #fff;
+}
+
+.dco-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 21000;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: rgba(40, 34, 30, 0.92);
+  color: #faf7f2;
+  font-size: 13px;
+  font-family: 'Noto Serif SC', serif;
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.35);
+  animation: dco-pop 0.25s ease;
+}
+
+@keyframes dco-float {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-8px) scale(1.02);
+  }
+}
+@keyframes dco-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes dco-chip {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, 0) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, 28px) rotate(var(--dco-rot, 12deg));
+  }
+}
+
+@media (max-width: 780px) {
+  .dco-xiaonuan-wall {
+    width: 58px;
+    height: 58px;
+    bottom: 12px;
+  }
+  .dco-xiaonuan-wall--plush {
+    left: clamp(8px, 14%, 14px);
+    bottom: 5px;
+    width: 70px;
+    height: 80px;
+  }
+  .dco-xiaonuan-fig-btn {
+    width: 58px;
+    height: 58px;
+  }
+  .dco-xiaonuan-wall--plush .dco-xiaonuan-fig-btn {
+    width: 100%;
+    height: 100%;
+  }
+  .dco-shred-wrap--desk {
+    right: 2%;
+    bottom: 6%;
+  }
+  .dco-shredder {
+    width: 80px;
+    height: 54px;
+  }
+}

@@ -1,0 +1,474 @@
+/* 物理书房：日历 / 收音机 / 盆栽（墙面层）与抽屉（书桌）— 与 isr-wall、isr-desk 配套 */
+
+.isr-physics-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 11;
+  pointer-events: none;
+}
+
+.isr-physics-layer > * {
+  pointer-events: auto;
+}
+
+/* —— 日历（挂墙） —— */
+.isr-cal-widget {
+  position: absolute;
+  top: clamp(28px, 5vh, 52px);
+  right: clamp(18%, 14vw, 30%);
+  width: 58px;
+  padding: 0;
+  border: none;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  text-align: center;
+  overflow: hidden;
+  transition: transform 0.2s ease;
+  font: inherit;
+  color: inherit;
+}
+
+.isr-cal-widget:hover {
+  transform: scale(1.05) rotate(-2deg);
+}
+
+.isr-cal-widget-top {
+  display: block;
+  background: #e8a0c8;
+  color: #fff;
+  font-size: 10px;
+  padding: 4px 0;
+  font-weight: bold;
+}
+
+.isr-cal-widget-day {
+  display: block;
+  font-size: 26px;
+  color: #b05a8a;
+  font-weight: bold;
+  margin-top: 4px;
+  line-height: 1;
+}
+
+.isr-cal-widget-desc {
+  display: block;
+  font-size: 9px;
+  color: #888;
+  padding-bottom: 5px;
+}
+
+.shelves-container {
+  position: absolute;
+  top: 0;
+  right: clamp(8px, 2.4vw, 36px);
+  width: clamp(102px, 14vw, 124px);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.isr-physics-layer > .shelves-container {
+  pointer-events: none;
+}
+
+.pink-lace-shelf {
+  width: 100%;
+  height: 16px;
+  background: #eebdce;
+  border-radius: 8px;
+  box-shadow:
+    inset 0 -3px 0 rgba(0, 0, 0, 0.06),
+    0 4px 6px rgba(0, 0, 0, 0.05);
+  position: relative;
+}
+
+.pink-lace-shelf::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 8px;
+  right: 8px;
+  height: 6px;
+  background-image: radial-gradient(circle at 50% 0, white 3px, transparent 3.5px);
+  background-size: 12px 6px;
+  background-repeat: repeat-x;
+}
+
+/* 修正：让右侧物件稳稳地坐在架子上 */
+#physicalPlant,
+#physicalRadio {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% - 2px);
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+.isr-shelf-hit {
+  pointer-events: auto;
+}
+
+.isr-radio-widget {
+  position: relative;
+  width: 78px;
+  height: 48px;
+  padding: 0;
+  border: 2px solid #c8b8a8;
+  border-radius: 8px;
+  background: #e0d4c8;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.isr-radio-widget:hover {
+  transform: translateY(-3px);
+}
+
+.isr-radio-widget--on {
+  box-shadow: 0 0 0 2px rgba(232, 160, 200, 0.55), 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.isr-radio-widget--tune {
+  animation: isrRadioTune 0.3s ease;
+}
+
+@keyframes isrRadioTune {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  20% {
+    transform: translate(-3px, 2px) rotate(-1.5deg);
+  }
+  45% {
+    transform: translate(3px, -2px) rotate(1.3deg);
+  }
+  70% {
+    transform: translate(-2px, -2px) rotate(-0.8deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .isr-radio-widget--tune {
+    animation: none;
+  }
+}
+
+.isr-radio-antenna {
+  position: absolute;
+  top: -18px;
+  right: 12px;
+  width: 2px;
+  height: 26px;
+  background: #aaa;
+  transform: rotate(15deg);
+  border-radius: 1px;
+}
+
+.isr-radio-speaker {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  width: 24px;
+  height: 24px;
+  background: #b0a090;
+  border-radius: 50%;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.isr-radio-dial {
+  position: absolute;
+  right: 12px;
+  top: 14px;
+  width: 14px;
+  height: 14px;
+  background: #fff;
+  border-radius: 50%;
+  border: 2px solid #888;
+}
+
+.isr-radio-note {
+  position: absolute;
+  top: -18px;
+  left: 18px;
+  font-size: 15px;
+  color: #e8a0c8;
+  animation: isrFloatNote 1.4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes isrFloatNote {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-18px) scale(1.15);
+    opacity: 0;
+  }
+}
+
+.isr-plant-widget {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  width: auto;
+  min-width: 64px;
+  height: auto;
+  min-height: 68px;
+  padding: 0 2px;
+  margin: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.isr-plant-widget:hover {
+  transform: scale(1.03);
+}
+
+.isr-plant-widget svg {
+  display: block;
+  margin-bottom: -6px;
+}
+
+.isr-water-drop {
+  position: absolute;
+  top: 4px;
+  left: 50%;
+  margin-left: -4px;
+  width: 8px;
+  height: 8px;
+  background: #8ecae6;
+  border-radius: 50%;
+  animation: isrDropWater 0.82s ease forwards;
+  pointer-events: none;
+}
+
+@keyframes isrDropWater {
+  0% {
+    transform: translateY(-12px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(16px);
+    opacity: 0;
+  }
+}
+
+.isr-heart-float {
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  margin-left: -8px;
+  color: #ff5d8f;
+  font-size: 14px;
+  animation: isrPopHeart 1s ease forwards;
+  pointer-events: none;
+}
+
+@keyframes isrPopHeart {
+  0% {
+    transform: translateY(0) scale(0.5);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-28px) scale(1.4);
+    opacity: 0;
+  }
+}
+
+/* —— 书桌抽屉 —— */
+.isr-drawer-widget {
+  position: absolute;
+  right: clamp(10px, 2.5vw, 28px);
+  bottom: clamp(6px, 1.2vh, 14px);
+  width: 132px;
+  height: 38px;
+  padding: 0;
+  border: 2px solid #e8c8c1;
+  border-radius: 4px;
+  background: #faedeb;
+  box-shadow:
+    inset 0 -4px 6px rgba(0, 0, 0, 0.05),
+    0 4px 6px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    z-index 0s;
+  z-index: 62;
+}
+
+.isr-drawer-widget:hover {
+  background: #ffe6e0;
+  transform: translateY(1px);
+}
+
+.isr-drawer-label {
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  color: #b05a8a;
+  white-space: nowrap;
+}
+
+.isr-drawer-handle {
+  width: 40px;
+  height: 6px;
+  background: #c8b0a8;
+  border-radius: 3px;
+}
+
+/* —— 全屏弹窗（低于疗愈平板 z-index） —— */
+.isr-pr-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 12000;
+  background: rgba(255, 240, 248, 0.82);
+  backdrop-filter: blur(3px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.isr-pr-modal {
+  position: relative;
+  max-width: 400px;
+  width: 100%;
+  padding: 28px;
+  border-radius: 16px;
+  background: #fff;
+  border: 2px solid #fce8f4;
+  box-shadow: 0 10px 30px rgba(232, 160, 200, 0.22);
+  text-align: center;
+}
+
+.isr-pr-modal--letter {
+  text-align: left;
+}
+
+.isr-pr-modal-close {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  border: none;
+  background: transparent;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  color: #aaa;
+  padding: 4px 8px;
+}
+
+.isr-pr-modal-h {
+  margin: 0 0 10px;
+  color: #b05a8a;
+  font-size: 1.1rem;
+}
+
+.isr-pr-modal-p {
+  margin: 0 0 8px;
+  font-size: 12px;
+  color: #888;
+}
+
+.isr-breathe-circle {
+  width: 96px;
+  height: 96px;
+  margin: 18px auto 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fce8f4, #e8a0c8);
+  animation: isrBreatheAnim 8s ease-in-out infinite;
+}
+
+@keyframes isrBreatheAnim {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.72;
+  }
+  50% {
+    transform: scale(1.55);
+    opacity: 1;
+  }
+}
+
+.isr-letter-textarea {
+  width: 100%;
+  margin-top: 12px;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background: #fffaf0;
+  outline: none;
+  resize: vertical;
+  min-height: 140px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 14px;
+  line-height: 28px;
+  box-sizing: border-box;
+  background-image: repeating-linear-gradient(
+    transparent,
+    transparent 27px,
+    rgba(232, 200, 193, 0.55) 28px
+  );
+}
+
+.isr-letter-send {
+  margin-top: 14px;
+  padding: 8px 22px;
+  background: #e8a0c8;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.2s ease;
+}
+
+.isr-letter-send:hover {
+  background: #d088b0;
+}
+
+.isr-star-burst-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 12001;
+  pointer-events: none;
+}
+
+.isr-desk--with-laptop .isr-drawer-widget {
+  right: clamp(6px, 1.2vw, 16px);
+  bottom: 4px;
+}
+
+@media (max-width: 720px) {
+  .isr-cal-widget {
+    right: 26%;
+    transform: scale(0.92);
+  }
+
+  .shelves-container {
+    right: 4px;
+    width: clamp(72px, 22vw, 96px);
+    transform: scale(0.88);
+    transform-origin: right top;
+  }
+
+  .isr-drawer-widget {
+    width: 108px;
+    height: 34px;
+  }
+}

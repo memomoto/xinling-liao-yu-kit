@@ -1,0 +1,52 @@
+/**
+ * 各「枢纽」侧栏导航按钮：衬线、纸质选中态，替代高饱和粉胶囊（仅类名，逻辑在各 hub）。
+ */
+
+.hpn-nav {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.hpn-btn {
+  display: block;
+  width: 100%;
+  margin: 0;
+  text-align: left;
+  padding: 9px 12px;
+  border: 1px dashed color-mix(in srgb, var(--paper-border) 55%, transparent);
+  border-radius: 2px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--font-serif);
+  color: color-mix(in srgb, var(--paper-fg) 75%, var(--ink-secondary));
+  background: color-mix(in srgb, var(--wood-dark) 22%, transparent);
+  box-shadow: none;
+  transition:
+    color 0.15s ease,
+    background 0.15s ease,
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.hpn-btn:hover {
+  color: var(--paper-fg);
+  border-color: color-mix(in srgb, var(--paper-border-soft) 70%, var(--ink-accent));
+  background: color-mix(in srgb, var(--wood-dark) 12%, transparent);
+}
+
+.hpn-btn--active {
+  color: var(--paper-bg);
+  background: color-mix(in srgb, var(--ink-accent) 82%, var(--wood-dark));
+  border-style: solid;
+  border-color: color-mix(in srgb, var(--ink-accent) 70%, var(--wood-dark));
+  box-shadow: var(--shadow-paper);
+}
+
+.hpn-nav--roomy .hpn-btn {
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 500;
+}

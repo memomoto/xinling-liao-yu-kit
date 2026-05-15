@@ -4,8 +4,9 @@
 
 import { useCallback, useState } from 'react';
 
-const FONT =
-  '-apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif';
+import { PaperButton, PaperCard, PaperTextarea } from '@/components/ui';
+
+import './cdc.css';
 
 const DEFAULT_FILES = [
   '全都是我的错.exe',
@@ -50,182 +51,86 @@ export function CognitiveDiskCleanupApp() {
   }, [dialogFile, draft]);
 
   return (
-    <div
-      style={{
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        fontFamily: FONT,
-        background: '#f5f5f7',
-        color: '#1d1d1f',
-        position: 'relative',
-      }}
-    >
-      <div style={{ padding: '14px 16px', borderBottom: '1px solid rgba(0,0,0,0.06)' }}>
-        <h1 style={{ margin: 0, fontSize: 17 }}>认知磁盘清理</h1>
-        <p style={{ margin: '8px 0 0', fontSize: 12, lineHeight: 1.55, color: '#515154' }}>
+    <div className="paper-app-surface cdc-root">
+      <header className="cdc-header">
+        <h1 className="cdc-title">认知磁盘清理</h1>
+        <p className="cdc-lead">
           扫描到的「旧版本信念」不会粗暴删除——邀请你写成更符合当下的<strong>现实版本</strong>。
         </p>
-      </div>
+      </header>
 
-      <div style={{ flex: 1, minHeight: 0, overflow: 'auto', padding: 16 }}>
+      <div className="cdc-main paper-app-scroll">
         {phase === 'intro' ? (
-          <button
-            type="button"
-            onClick={startScan}
-            style={{
-              padding: '10px 18px',
-              borderRadius: 999,
-              border: 'none',
-              background: '#007aff',
-              color: '#fff',
-              fontWeight: 600,
-              fontSize: 14,
-              cursor: 'pointer',
-            }}
-          >
+          <PaperButton variant="primary" onClick={startScan}>
             开始扫描陈旧认知文件…
-          </button>
+          </PaperButton>
         ) : null}
 
         {phase === 'scan' ? (
           <div>
-            <div style={{ fontSize: 13, marginBottom: 12 }}>正在扫描记忆分区…</div>
-            <div
-              style={{
-                height: 6,
-                borderRadius: 3,
-                background: 'rgba(0,0,0,0.06)',
-                overflow: 'hidden',
-              }}
-            >
+            <div className="cdc-scan-title">正在扫描记忆分区…</div>
+            <div className="cdc-progress">
               <div
-                style={{
-                  height: '100%',
-                  width: `${(revealed / DEFAULT_FILES.length) * 100}%`,
-                  background: '#34c759',
-                  transition: 'width 0.35s ease',
-                }}
+                className="cdc-progress-fill"
+                style={{ width: `${(revealed / DEFAULT_FILES.length) * 100}%` }}
               />
             </div>
-            <ul style={{ marginTop: 14, paddingLeft: 18, fontSize: 13 }}>
+            <ul className="cdc-file-list">
               {DEFAULT_FILES.slice(0, revealed).map((f) => (
-                <li key={f} style={{ marginBottom: 6 }}>
-                  {f}
-                </li>
+                <li key={f}>{f}</li>
               ))}
             </ul>
           </div>
         ) : null}
 
         {phase === 'list' ? (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+          <div className="cdc-stack">
             {DEFAULT_FILES.map((f) => (
-              <div
-                key={f}
-                style={{
-                  padding: '10px 12px',
-                  borderRadius: 10,
-                  background: '#fff',
-                  border: '1px solid rgba(0,0,0,0.06)',
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  gap: 10,
-                  alignItems: 'center',
-                  flexWrap: 'wrap',
-                }}
-              >
-                <span style={{ fontSize: 13 }}>{f}</span>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                  {updates[f] ? (
-                    <span style={{ fontSize: 11, color: '#34c759', maxWidth: 180 }}>已更新</span>
-                  ) : null}
-                  <button
-                    type="button"
-                    onClick={() => openUpdate(f)}
-                    style={{
-                      padding: '6px 12px',
-                      borderRadius: 8,
-                      border: 'none',
-                      background: '#007aff',
-                      color: '#fff',
-                      fontSize: 12,
-                      cursor: 'pointer',
-                    }}
-                  >
+              <PaperCard key={f} elevation="raised" className="cdc-file-row">
+                <span className="cdc-file-name">{f}</span>
+                <div className="cdc-file-actions">
+                  {updates[f] ? <span className="cdc-updated">已更新</span> : null}
+                  <PaperButton variant="secondary" className="cdc-update-btn" onClick={() => openUpdate(f)}>
                     更新版本
-                  </button>
+                  </PaperButton>
                 </div>
-              </div>
+              </PaperCard>
             ))}
           </div>
         ) : null}
       </div>
 
       {dialogFile ? (
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            background: 'rgba(0,0,0,0.35)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: 16,
-            zIndex: 20,
-          }}
-        >
-          <div
-            style={{
-              width: 'min(400px, 100%)',
-              borderRadius: 14,
-              background: '#fff',
-              padding: 16,
-              boxShadow: '0 24px 80px rgba(0,0,0,0.2)',
-            }}
+        <div className="cdc-dialog-backdrop">
+          <PaperCard
+            elevation="floating"
+            className="cdc-dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="cdc-dialog-title"
           >
-            <div style={{ fontSize: 12, fontWeight: 700 }}>文件版本过旧</div>
-            <p style={{ margin: '8px 0', fontSize: 13, color: '#515154' }}>
-              检测到旧版本：<strong style={{ color: '#c41e3a' }}>{dialogFile}</strong>
+            <h2 id="cdc-dialog-title" className="cdc-dialog-title">
+              文件版本过旧
+            </h2>
+            <p className="cdc-dialog-body">
+              检测到旧版本：<strong className="cdc-dialog-file">{dialogFile}</strong>
               <br />
               它可能诞生于过去的处境，不一定适用于<strong>此刻的现实</strong>。是否写成新版本？
             </p>
-            <textarea
+            <PaperTextarea
               value={draft}
               onChange={(e) => setDraft(e.target.value)}
               placeholder="例如：那件事有多重因素，并不全然是我的责任…"
-              rows={4}
-              style={{
-                width: '100%',
-                boxSizing: 'border-box',
-                padding: 10,
-                borderRadius: 8,
-                border: '1px solid rgba(0,0,0,0.12)',
-                fontSize: 13,
-                fontFamily: FONT,
-              }}
             />
-            <div style={{ marginTop: 12, display: 'flex', justifyContent: 'flex-end', gap: 8 }}>
-              <button type="button" onClick={() => setDialogFile(null)} style={{ padding: '8px 14px', borderRadius: 8, border: '1px solid rgba(0,0,0,0.12)', background: '#fff', cursor: 'pointer' }}>
+            <div className="cdc-dialog-actions">
+              <PaperButton variant="secondary" onClick={() => setDialogFile(null)}>
                 稍后再说
-              </button>
-              <button
-                type="button"
-                onClick={saveUpdate}
-                style={{
-                  padding: '8px 14px',
-                  borderRadius: 8,
-                  border: 'none',
-                  background: '#34c759',
-                  color: '#fff',
-                  fontWeight: 600,
-                  cursor: 'pointer',
-                }}
-              >
+              </PaperButton>
+              <PaperButton variant="primary" onClick={saveUpdate} disabled={!draft.trim()}>
                 保存新版本
-              </button>
+              </PaperButton>
             </div>
-          </div>
+          </PaperCard>
         </div>
       ) : null}
     </div>

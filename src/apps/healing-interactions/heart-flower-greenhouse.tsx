@@ -2,152 +2,25 @@
  * 心之花温室 — SVG 花型（尖瓣 ↔ 圆瓣双层渐变）、浇水 Canvas 粒子、少女浅底色。
  */
 
-import type { CSSProperties } from 'react';
+import type { CSSProperties, MouseEvent } from 'react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
+import { useHeartFlowerSyncedOrLocalCare } from '@/contexts/heart-flower-room-sync';
+import {
+  emptyHeartFlowerCare,
+  heartFlowerMorphT,
+  HEART_FLOWER_SPECS,
+  type HeartFlowerId,
+  type HeartFlowerSpec,
+} from '@/lib/heart-flower-model';
+
+import { HeartFlowerSvg } from './heart-flower-visual';
 import { NOISE_BG } from './noise';
-
-type FlowerId = 'anger' | 'fawning' | 'fear' | 'rigid';
-
-type Care = Record<FlowerId, { water: number; hug: number }>;
-
-const emptyCare = (): Care => ({
-  anger: { water: 0, hug: 0 },
-  fawning: { water: 0, hug: 0 },
-  fear: { water: 0, hug: 0 },
-  rigid: { water: 0, hug: 0 },
-});
-
-function morphT(row: { water: number; hug: number }): number {
-  return Math.min(1, (row.water + row.hug) * 0.22 + (row.water >= 1 && row.hug >= 1 ? 0.15 : 0));
-}
-
-/** 单片花瓣：尖锐 vs 圆润贝塞尔（双层 opacity） */
-const PETAL_SHARP = 'M 0,-46 L 16,-14 L 0,12 L -16,-14 Z';
-const PETAL_SOFT = 'M 0,-46 C 22,-36 22,-12 0,12 C -22,-12 -22,-36 0,-46';
-
-const STEM_PATH = 'M 0,14 Q 6,46 0,76';
-const POT_PATH = 'M -38 76 Q -44 92 -36 98 H 36 Q 44 92 38 76 Z';
-
-type FlowerSpec = {
-  id: FlowerId;
-  label: string;
-  hint: string;
-  sharp: string;
-  soft: string;
-  centerSharp: string;
-  centerSoft: string;
-};
-
-const FLOWERS: FlowerSpec[] = [
-  {
-    id: 'anger',
-    label: '愤怒',
-    hint: '尖刺像在呼救',
-    sharp: '#8B4A6B',
-    soft: '#FFB7D5',
-    centerSharp: '#5c3048',
-    centerSoft: '#ff9ec8',
-  },
-  {
-    id: 'fawning',
-    label: '讨好',
-    hint: '低垂的灰蓝',
-    sharp: '#6B7B8B',
-    soft: '#B5D5FF',
-    centerSharp: '#4a5560',
-    centerSoft: '#8bb8ff',
-  },
-  {
-    id: 'fear',
-    label: '恐惧',
-    hint: '紧缩的深紫',
-    sharp: '#4A4A6B',
-    soft: '#E8C5FF',
-    centerSharp: '#32324a',
-    centerSoft: '#d5a8ff',
-  },
-  {
-    id: 'rigid',
-    label: '偏激',
-    hint: '一面锋利的刃',
-    sharp: '#9A5C40',
-    soft: '#FFD4A8',
-    centerSharp: '#6b3d28',
-    centerSoft: '#ffc080',
-  },
-];
 
 type Drop = { x: number; y: number; vy: number; r: number; life: number };
 
-function FlowerSvg({
-  spec,
-  t,
-  glow,
-  breathScale = 1,
-}: {
-  spec: FlowerSpec;
-  t: number;
-  glow: boolean;
-  breathScale?: number;
-}) {
-  const sharpOp = 1 - t;
-  const softOp = t;
-
-  return (
-    <svg width="140" height="160" viewBox="-70 -90 140 170" style={{ overflow: 'visible' }}>
-      <defs>
-        <linearGradient id={`grad-pot-${spec.id}`} x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stopColor="#f5e6dc" />
-          <stop offset="100%" stopColor="#dcb898" />
-        </linearGradient>
-        <filter id={`glow-${spec.id}`} x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur stdDeviation={glow ? 4 : 2} result="blur" />
-          <feMerge>
-            <feMergeNode in="blur" />
-            <feMergeNode in="SourceGraphic" />
-          </feMerge>
-        </filter>
-      </defs>
-
-      <g transform={`translate(0, -18) scale(${breathScale}) translate(0, 18)`}>
-      <path d={STEM_PATH} fill="none" stroke="rgba(90,120,80,0.85)" strokeWidth="4" strokeLinecap="round" />
-
-      <path
-        d={POT_PATH}
-        fill={`url(#grad-pot-${spec.id})`}
-        stroke="#c9a88c"
-        strokeWidth="1.2"
-        opacity={0.95}
-      />
-
-      <g filter={glow ? `url(#glow-${spec.id})` : undefined}>
-        {Array.from({ length: 6 }).map((_, i) => (
-          <g key={i} transform={`rotate(${i * 60})`}>
-            <path
-              d={PETAL_SHARP}
-              fill={spec.sharp}
-              opacity={sharpOp * 0.92 + 0.06}
-              style={{ transition: 'opacity 0.55s ease' }}
-            />
-            <path
-              d={PETAL_SOFT}
-              fill={spec.soft}
-              opacity={softOp * 0.96}
-              style={{ transition: 'opacity 0.55s ease' }}
-            />
-          </g>
-        ))}
-        <circle r="11" fill={spec.centerSoft} opacity={softOp * 0.92} />
-        <circle r="11" fill={spec.centerSharp} opacity={sharpOp * 0.85} />
-      </g>
-      </g>
-    </svg>
-  );
-}
-
 export function HeartFlowerGreenhouse() {
-  const [care, setCare] = useState<Care>(() => emptyCare());
+  const { care, setCare } = useHeartFlowerSyncedOrLocalCare();
   const wrapRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const dropsRef = useRef<Drop[]>([]);
@@ -255,7 +128,7 @@ export function HeartFlowerGreenhouse() {
     return () => window.removeEventListener('resize', resize);
   }, []);
 
-  const water = (id: FlowerId, e: React.MouseEvent) => {
+  const water = (id: HeartFlowerId, e: MouseEvent) => {
     setCare((prev) => ({
       ...prev,
       [id]: { ...prev[id], water: Math.min(3, prev[id].water + 1) },
@@ -263,7 +136,7 @@ export function HeartFlowerGreenhouse() {
     spawnWater(e.clientX, e.clientY);
   };
 
-  const hug = (id: FlowerId) => {
+  const hug = (id: HeartFlowerId) => {
     setCare((prev) => ({
       ...prev,
       [id]: { ...prev[id], hug: Math.min(3, prev[id].hug + 1) },
@@ -334,9 +207,9 @@ export function HeartFlowerGreenhouse() {
         const now = performance.now();
         if (sm > 0.28 && prevSmoothedRef.current < 0.16 && now - lastExhaleRef.current > 800) {
           lastExhaleRef.current = now;
-          const idx = exhaleIdxRef.current % FLOWERS.length;
+          const idx = exhaleIdxRef.current % HEART_FLOWER_SPECS.length;
           exhaleIdxRef.current += 1;
-          const fid = FLOWERS[idx]!.id;
+          const fid = HEART_FLOWER_SPECS[idx]!.id;
           setCare((prev) => ({
             ...prev,
             [fid]: { ...prev[fid], water: Math.min(3, prev[fid].water + 1) },
@@ -371,9 +244,9 @@ export function HeartFlowerGreenhouse() {
       const now = performance.now();
       if (tiltAmp > 44 && now - lastTiltWaterRef.current > 1400) {
         lastTiltWaterRef.current = now;
-        const idx = exhaleIdxRef.current % FLOWERS.length;
+        const idx = exhaleIdxRef.current % HEART_FLOWER_SPECS.length;
         exhaleIdxRef.current += 1;
-        const fid = FLOWERS[idx]!.id;
+        const fid = HEART_FLOWER_SPECS[idx]!.id;
         setCare((prev) => ({
           ...prev,
           [fid]: { ...prev[fid], water: Math.min(3, prev[fid].water + 1) },
@@ -420,7 +293,7 @@ export function HeartFlowerGreenhouse() {
     stopBreath();
     setTiltOn(false);
     setTiltErr(null);
-    setCare(emptyCare());
+    setCare(emptyHeartFlowerCare());
   }, [stopBreath]);
 
   return (
@@ -517,8 +390,8 @@ export function HeartFlowerGreenhouse() {
             gap: 16,
           }}
         >
-          {FLOWERS.map((f) => {
-            const t = morphT(care[f.id]);
+          {HEART_FLOWER_SPECS.map((f: HeartFlowerSpec) => {
+            const t = heartFlowerMorphT(care[f.id]);
             const glow = t >= 0.72;
             return (
               <div
@@ -535,7 +408,7 @@ export function HeartFlowerGreenhouse() {
                   gap: 8,
                 }}
               >
-                <FlowerSvg spec={f} t={t} glow={glow} breathScale={breathOn ? breathScale : 1} />
+                <HeartFlowerSvg spec={f} t={t} glow={glow} breathScale={breathOn ? breathScale : 1} />
                 <div style={{ textAlign: 'center' }}>
                   <div style={{ fontSize: 15, fontWeight: 700, color: '#5c4550' }}>{f.label}</div>
                   <div style={{ fontSize: 11, color: '#9a8588', marginTop: 2 }}>{f.hint}</div>

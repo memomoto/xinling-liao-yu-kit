@@ -1,0 +1,151 @@
+.cdc-root {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  font-family: var(--font-serif);
+  background: var(--paper-bg);
+  color: var(--ink-primary);
+}
+
+.cdc-header {
+  flex-shrink: 0;
+  padding: var(--space-4) var(--space-4);
+  border-bottom: 1px solid var(--paper-border-soft);
+  background: color-mix(in srgb, var(--paper-fg) 88%, var(--paper-bg));
+}
+
+.cdc-title {
+  margin: 0;
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--wood-dark);
+}
+
+.cdc-lead {
+  margin: var(--space-2) 0 0;
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-loose);
+  color: var(--ink-secondary);
+}
+
+.cdc-main {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: var(--space-4);
+}
+
+.cdc-scan-title {
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--space-3);
+  color: var(--ink-secondary);
+}
+
+.cdc-progress {
+  height: 6px;
+  border-radius: 2px;
+  background: var(--paper-bg-hover);
+  overflow: hidden;
+  border: 1px solid var(--paper-border-soft);
+}
+
+.cdc-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--ink-accent) 0%, color-mix(in srgb, var(--ink-accent) 65%, var(--wood-dark)) 100%);
+  transition: width 0.35s ease;
+}
+
+.cdc-file-list {
+  margin: var(--space-4) 0 0;
+  padding-left: 1.1rem;
+  font-size: var(--font-size-sm);
+  color: var(--ink-primary);
+  line-height: var(--line-height-normal);
+}
+
+.cdc-file-list li {
+  margin-bottom: var(--space-2);
+}
+
+.cdc-file-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  padding: var(--space-3);
+}
+
+.cdc-file-name {
+  font-size: var(--font-size-sm);
+  word-break: break-all;
+}
+
+.cdc-file-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.cdc-updated {
+  font-size: var(--font-size-xs);
+  color: var(--ink-ok);
+  max-width: 11rem;
+}
+
+.cdc-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.cdc-dialog-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  background: color-mix(in srgb, var(--wood-dark) 42%, transparent);
+}
+
+.cdc-dialog {
+  width: min(420px, 100%);
+  padding: var(--space-4);
+}
+
+.cdc-dialog-title {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--wood-dark);
+  margin: 0;
+  letter-spacing: 0.06em;
+}
+
+.cdc-dialog-body {
+  margin: var(--space-2) 0 var(--space-3);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-loose);
+  color: var(--ink-secondary);
+}
+
+.cdc-dialog-file {
+  color: var(--ink-accent);
+  font-weight: 600;
+}
+
+.cdc-dialog .paper-textarea {
+  min-height: 140px;
+}
+
+.cdc-root .cdc-update-btn {
+  padding: 0.35rem 0.75rem;
+  font-size: var(--font-size-xs);
+}
+
+.cdc-root .cdc-update-btn .paper-btn__label {
+  letter-spacing: 0.08em;
+}

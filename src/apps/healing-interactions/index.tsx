@@ -5,10 +5,13 @@
 import { useCallback, useState } from 'react';
 import type { CSSProperties } from 'react';
 
+import { useSyncedHeartFlowerNullable } from '@/contexts/heart-flower-room-sync';
+
 import { AdultExitKey } from './adult-exit-key';
 import { HealingInteractionsFonts } from './fonts-loader';
 import { HarborQuietRoom } from './harbor-quiet-room';
 import { HeartFlowerGreenhouse } from './heart-flower-greenhouse';
+import './mirror-notice.css';
 import { IntuitionRadar } from './intuition-radar';
 
 type TabId = 'flowers' | 'exit' | 'radar' | 'harbor';
@@ -28,6 +31,7 @@ const TABS: { id: TabId; label: string }[] = [
 
 export function HealingInteractionsApp() {
   const [tab, setTab] = useState<TabId>('flowers');
+  const physicalHeartMirror = useSyncedHeartFlowerNullable();
 
   const tabBtnStyle = useCallback((active: boolean): CSSProperties => ({
     flexShrink: 0,
@@ -110,6 +114,11 @@ export function HealingInteractionsApp() {
         </nav>
 
         <section style={{ borderRadius: 14, overflow: 'hidden' }}>
+          {tab === 'flowers' && physicalHeartMirror ? (
+            <p className="mirror-notice" role="note">
+              提示：这里的浇水与拥抱交互将同步反映在你书桌右侧的物理盆栽上。
+            </p>
+          ) : null}
           {tab === 'flowers' ? <HeartFlowerGreenhouse /> : null}
           {tab === 'exit' ? <AdultExitKey /> : null}
           {tab === 'radar' ? <IntuitionRadar /> : null}

@@ -1,5 +1,6 @@
-import { useState, type CSSProperties } from 'react';
+import { useState } from 'react';
 
+import '@/components/hub-shell/hub-paper-nav.css';
 import { TwoColumnLayout } from '@/components/hub-shell/two-column-layout';
 import { WideScreenDecoration } from '@/components/hub-shell/wide-screen-decoration';
 import { useContainerWidth } from '@/hooks/use-container-width';
@@ -13,26 +14,12 @@ const TABS: { id: TabId; label: string }[] = [
   { id: 'healingBook', label: '疗愈叙事绘本' },
 ];
 
-const BTN: CSSProperties = {
-  display: 'block',
-  width: '100%',
-  textAlign: 'left',
-  padding: '9px 12px',
-  margin: 0,
-  border: 'none',
-  borderRadius: 8,
-  fontSize: 12,
-  fontWeight: 500,
-  cursor: 'pointer',
-  fontFamily: '"PingFang SC", "Microsoft YaHei", system-ui, sans-serif',
-};
-
 export function HealingPlayHubApp() {
   const { ref, width } = useContainerWidth();
   const [tab, setTab] = useState<TabId>('healingInteractions');
 
   const sidebar = (
-    <nav aria-label="疗愈互动与叙事" style={{ padding: 10, display: 'flex', flexDirection: 'column', gap: 4 }}>
+    <nav className="hpn-nav" aria-label="疗愈互动与叙事">
       {TABS.map((t) => {
         const on = t.id === tab;
         return (
@@ -40,12 +27,7 @@ export function HealingPlayHubApp() {
             key={t.id}
             type="button"
             onClick={() => setTab(t.id)}
-            style={{
-              ...BTN,
-              background: on ? 'rgba(244, 114, 182, 0.32)' : 'transparent',
-              color: on ? '#831843' : '#450a1e',
-              boxShadow: on ? 'inset 0 0 0 1px rgba(219, 39, 119, 0.22)' : 'none',
-            }}
+            className={`hpn-btn${on ? ' hpn-btn--active' : ''}`}
           >
             {t.label}
           </button>

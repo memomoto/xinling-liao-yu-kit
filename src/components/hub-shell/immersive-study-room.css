@@ -1,0 +1,1705 @@
+/* 沉浸式书房：左书架 · 右墙投影 · 下手账桌台 */
+
+.isr-view-enter-active,
+.isr-view-leave-active {
+  transition:
+    opacity 0.55s cubic-bezier(0.19, 1, 0.22, 1),
+    transform 0.55s cubic-bezier(0.19, 1, 0.22, 1);
+}
+.isr-view-enter-from {
+  opacity: 0;
+  transform: scale(1.04) translateY(24px);
+}
+.isr-view-leave-to {
+  opacity: 0;
+  transform: scale(0.96) translateY(-20px);
+}
+
+.isr-room-container {
+  display: flex;
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  height: 100%;
+  background: radial-gradient(ellipse 120% 100% at 72% 42%, #fdf6f8 0%, #f0e4ea 38%, #e5d6df 100%);
+  position: relative;
+}
+
+.isr-lights-out {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.82);
+  z-index: 15;
+  pointer-events: none;
+  transition: opacity 0.9s ease;
+  opacity: 0;
+}
+.isr-lights-out--on {
+  opacity: 1;
+}
+
+/* 左书架：粉白刷漆木板（仅视觉；勿改 width/flex/padding 等布局量） */
+.isr-bookshelf-area {
+  width: 30%;
+  min-width: 220px;
+  height: 100%;
+  background-color: #fff5f7;
+  background-image: repeating-linear-gradient(
+    to right,
+    #fff5f7 0,
+    #fff5f7 46px,
+    #fceaef 46px,
+    #fceaef 52px
+  );
+  border-right: 15px solid #f4d6e0;
+  box-shadow:
+    inset -12px 0 28px rgba(226, 200, 220, 0.32),
+    inset 6px 0 20px rgba(255, 255, 255, 0.6),
+    4px 0 18px rgba(216, 191, 216, 0.22);
+  display: flex;
+  flex-direction: column;
+  padding: 16px 0;
+  position: relative;
+  z-index: 20;
+  box-sizing: border-box;
+}
+
+.isr-shelf-row {
+  flex: 1;
+  border-bottom: 20px solid #edc8d6;
+  background-color: #fff5f7;
+  background-image: repeating-linear-gradient(
+    to right,
+    #fff5f7 0,
+    #fff5f7 46px,
+    #f8e1e7 46px,
+    #f8e1e7 52px
+  );
+  box-shadow:
+    inset 0 -10px 18px rgba(226, 200, 220, 0.28),
+    inset 0 8px 16px rgba(255, 255, 255, 0.5),
+    0 8px 20px rgba(216, 191, 216, 0.32),
+    0 2px 0 rgba(255, 251, 252, 0.7);
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-end;
+  align-items: flex-end;
+  padding: 22px 10px 0 18px;
+  gap: 8px 5px;
+  position: relative;
+  min-height: 0;
+}
+
+/* 层高光泽（全幅） */
+.isr-shelf-row::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.38) 0%, transparent 42%, rgba(244, 214, 224, 0.2) 100%);
+  opacity: 0.85;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/**
+ * 层板下缘蕾丝波浪：pure CSS，半圆 seamless repeat（周期 20px × 高度 10px）
+ * #F4D6E0 — 与地面层板同色系的奶油粉，略雕花感；仅桌面横板布局时在窄屏关掉见 @media。
+ */
+.isr-shelf-row::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -10px;
+  height: 10px;
+  z-index: 6;
+  pointer-events: none;
+  background-repeat: repeat-x;
+  background-size: 20px 10px;
+  background-position: 0 0;
+  background-image: radial-gradient(circle 10px at 10px 0, #f4d6e0 99%, transparent calc(99% + 1px));
+}
+
+.isr-shelf-label {
+  position: absolute;
+  top: 8px;
+  left: 14px;
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(168, 96, 124, 0.62);
+  z-index: 5;
+  font-family: 'Noto Serif SC', serif;
+}
+
+.isr-book-spine {
+  width: 44px;
+  cursor: pointer;
+  position: relative;
+  z-index: 10;
+  border: none;
+  border-radius: 3px 3px 0 0;
+  padding: 14px 0;
+  margin: 0;
+  color: #5c4e4f;
+  box-shadow:
+    inset 2px 0 6px rgba(255, 255, 255, 0.58),
+    inset -2px 0 10px rgba(226, 200, 220, 0.32),
+    0 6px 16px rgba(216, 191, 216, 0.35);
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 2px;
+  font-family: 'Noto Serif SC', serif;
+  transition:
+    transform 0.3s cubic-bezier(0.19, 1, 0.22, 1),
+    box-shadow 0.3s ease,
+    filter 0.25s ease,
+    color 0.2s ease;
+  transform-origin: bottom;
+}
+.isr-book-spine:hover {
+  transform: translateY(-12px) rotate(-2deg);
+  z-index: 20;
+  filter: brightness(1.06);
+  box-shadow:
+    -6px 12px 24px rgba(216, 191, 216, 0.4),
+    -2px 8px 20px rgba(232, 210, 224, 0.38),
+    0 0 0 1px rgba(255, 255, 255, 0.82),
+    0 0 26px rgba(255, 255, 255, 0.6);
+  color: #5c4e4f;
+}
+.isr-book-icon {
+  transform: rotate(90deg);
+  margin-bottom: 8px;
+  font-size: 15px;
+  opacity: 0.82;
+  color: #5c4e4f;
+}
+
+.isr-book-spine--compact {
+  width: 34px;
+  padding: 10px 0;
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+
+.isr-book-spine--compact .isr-book-icon {
+  font-size: 12px;
+  margin-bottom: 6px;
+}
+
+.isr-book-spine:focus-visible {
+  outline: 2px solid rgba(236, 180, 200, 0.85);
+  outline-offset: 2px;
+}
+
+.isr-wall-desk-area {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  /* 整块墙+书桌高于 #room-dark-mask (50)，书架区保持较低层可被夜幕遮住 */
+  z-index: 51;
+}
+
+.isr-wall {
+  flex: 6;
+  min-height: 0;
+  position: relative;
+  overflow: visible;
+  background-color: transparent;
+  background-image: none;
+  box-shadow: inset 0 32px 64px rgba(255, 255, 255, 0.38);
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+}
+
+/* Upper wall block: wallpaper underlay; window / shelves keep existing z-index above */
+.isr-wall::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: url(/photo/back_big.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* 幕布未落下时：轻质文字引导（不绑 React 状态，:has 匹配收起的幕布） */
+.isr-wall:has(.isr-projector-screen--up)::after {
+  content: '提示：点击下方书桌上的遥控器，可落下投影幕布';
+  position: absolute;
+  left: 50%;
+  bottom: 13%;
+  transform: translateX(-50%);
+  max-width: min(90%, 400px);
+  padding: 6px 14px;
+  font-family: 'Noto Serif SC', 'Source Han Serif SC', var(--font-serif, serif);
+  font-size: 11px;
+  line-height: 1.5;
+  color: rgba(92, 78, 79, 0.88);
+  text-align: center;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.85);
+  pointer-events: none;
+  z-index: 11;
+  opacity: 0.94;
+}
+
+/* 墙面悬浮隔板（娃娃 / 绿植），位于窗户两侧 */
+.isr-floating-shelf {
+  position: absolute;
+  z-index: 10;
+  height: 15px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, #f5e4ea 0%, #e9ccd6 52%, #ddbac8 100%);
+  box-shadow:
+    0 10px 18px rgba(225, 185, 195, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.65);
+  border-top: 1px solid rgba(255, 255, 255, 0.55);
+  pointer-events: none;
+}
+.isr-floating-shelf--left {
+  left: clamp(8px, 2.4vw, 36px);
+  top: 38%;
+  width: 124px;
+}
+
+.isr-floating-shelf-bracket {
+  position: absolute;
+  bottom: -5px;
+  width: 4px;
+  height: 9px;
+  background: #e8cdd7;
+  border-radius: 0 0 1px 1px;
+  box-shadow: 0 3px 6px rgba(225, 185, 195, 0.45);
+  pointer-events: none;
+}
+.isr-floating-shelf-bracket--l {
+  left: 15px;
+}
+.isr-floating-shelf-bracket--r {
+  right: 15px;
+}
+.isr-floating-shelf-plant {
+  position: absolute;
+  left: 50%;
+  bottom: 12px;
+  transform: translateX(-50%);
+  font-size: clamp(1.7rem, 3.5vw, 2.2rem);
+  line-height: 1;
+  filter: drop-shadow(3px 10px 8px rgba(225, 185, 195, 0.5));
+  pointer-events: none;
+  user-select: none;
+}
+
+/* 置物板下缘：白色珍珠水滴（断续圆点悬挂感） */
+.isr-floating-shelf::after {
+  content: '';
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: -5px;
+  height: 6px;
+  pointer-events: none;
+  background-repeat: repeat-x;
+  background-size: 9px 6px;
+  background-position: center 3px;
+  background-image: radial-gradient(circle 2px at 50% 0, rgba(255, 255, 255, 0.98) 94%, transparent 96%);
+  filter: drop-shadow(0 1px 2px rgba(244, 200, 210, 0.45));
+  z-index: 4;
+}
+
+/* 窗户：幕布收起时在墙内露出窗外风景（气球在风景层之上、幕布之下） */
+.isr-window-frame {
+  position: absolute;
+  left: 50%;
+  top: 11%;
+  transform: translateX(-50%);
+  width: 70%;
+  max-width: 620px;
+  height: min(78%, 460px);
+  min-height: 180px;
+  border: 10px solid #faf8f5;
+  border-radius: 4px;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.9),
+    inset 0 20px 40px rgba(230, 220, 224, 0.35),
+    0 10px 26px rgba(225, 185, 195, 0.35);
+  overflow: hidden;
+  z-index: 8;
+  box-sizing: border-box;
+}
+
+.isr-window-scenery {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  /* 窗外风景图；窗外气球 `.balloon-wrap`（BalloonOutsideWindow）；可选 windowScenerySrc 仍可叠图 */
+  /* Place your scenery at repo `photo/back.jpg` and sync to `public/photo/back.jpg` for Vite; no remote URLs. */
+  background-image: url(/photo/back.jpg);
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  box-shadow:
+    inset 0px 8px 15px rgba(0, 0, 0, 0.15),
+    inset 0px 0px 20px rgba(255, 255, 255, 0.4);
+}
+
+@keyframes float-balloon {
+  0% {
+    transform: translateY(0) rotate(-2deg);
+  }
+  100% {
+    transform: translateY(-10px) rotate(2deg);
+  }
+}
+
+@keyframes balloon-fly-away-window {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-260px) translateX(22px) scale(0.35) rotate(8deg);
+    opacity: 0;
+  }
+}
+
+/* 窗外 SVG 气球：置于夜景层之上 (z-5)，低于星光窗帘 (z-10) */
+.balloon-wrap {
+  position: absolute;
+  right: 12%;
+  bottom: 11%;
+  z-index: 5;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  line-height: 0;
+  animation: float-balloon 3.2s ease-in-out infinite alternate;
+  transition: filter 0.2s ease;
+}
+
+.balloon-wrap svg {
+  display: block;
+}
+
+.balloon-wrap:hover:not(:disabled) {
+  filter: brightness(1.12);
+}
+
+.balloon-wrap:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
+.balloon-wrap--flying {
+  animation: balloon-fly-away-window 5.2s ease-in forwards !important;
+}
+
+@media (max-width: 780px) {
+  .balloon-wrap {
+    right: 8%;
+    bottom: 8%;
+  }
+
+  .balloon-wrap svg {
+    width: 48px;
+    height: auto;
+  }
+}
+
+/* --- 星光薄纱窗帘（窗框内最上层，布面穿透以点击气球；仅拉手可点） --- */
+/* --- 窗帘容器：绝对定位，并且保证不遮挡点击事件 --- */
+.curtain-wrapper {
+  position: absolute;
+  inset: 0; /* 铺满整个窗户 */
+  pointer-events: none; /* 【极其关键】让鼠标能穿透窗帘点击后面的气球 */
+  z-index: 10;
+  overflow: hidden;
+}
+/* 交互分区：整区不接收命中，由窄条拉手单独接收 */
+.isr-curtain-area {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+/* --- 薄纱材质与滤镜（宽度由 React inline style 控制） --- */
+.isr-curtain-cloth {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  pointer-events: none;
+  backdrop-filter: blur(1.5px);
+  will-change: width;
+  z-index: 1;
+}
+/* 内层承载渐变与风吹动画，避免动画与宽度过渡冲突 */
+.curtain-cloth .curtain-content {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+/* --- 左窗帘样式与风吹动画 --- */
+.curtain-left {
+  left: 0;
+}
+.curtain-left .curtain-content {
+  /* 极度清透的渐变模拟布料褶皱 */
+  background: linear-gradient(
+    to right,
+    rgba(255, 235, 245, 0.22) 0%,
+    rgba(255, 245, 250, 0.38) 18%,
+    rgba(255, 230, 242, 0.12) 45%,
+    rgba(255, 240, 248, 0.28) 72%,
+    rgba(255, 220, 238, 0.06) 100%
+  );
+  box-shadow: none;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  animation: curtain-left-wind 7s ease-in-out infinite;
+}
+/* --- 右窗帘样式与风吹动画 --- */
+.curtain-right {
+  right: 0;
+}
+.curtain-right .curtain-content {
+  background: linear-gradient(
+    to left,
+    rgba(255, 235, 245, 0.22) 0%,
+    rgba(255, 245, 250, 0.38) 18%,
+    rgba(255, 230, 242, 0.12) 45%,
+    rgba(255, 240, 248, 0.28) 72%,
+    rgba(255, 220, 238, 0.06) 100%
+  );
+  box-shadow: none;
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  animation: curtain-right-wind 7s ease-in-out infinite 1.2s; /* 延迟1.2秒，让左右风吹有错落感 */
+}
+/* 窗帘拉带：高于星光层，窄条命中；置于 DOM 星层之后以便叠在星点之上 */
+.isr-curtain-handle.handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 14px;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: transparent;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  pointer-events: auto;
+  z-index: 6; /* 高于 .starry-sparkles */
+  color: transparent;
+  overflow: hidden;
+}
+.isr-curtain-handle.handle:focus-visible {
+  outline: 2px solid rgba(255, 200, 230, 0.85);
+  outline-offset: -2px;
+}
+.isr-curtain-handle.isr-curtain-handle--dragging {
+  cursor: grabbing;
+}
+/* --- 星光基础样式 --- */
+.starry-sparkles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4;
+}
+.star {
+  position: absolute;
+  border-radius: 50%;
+  background: white;
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.8); /* 加点发光效果更逼真 */
+}
+/* 绑定三种不同频率的闪烁动画 */
+.star.a {
+  animation: twinkle-a var(--dur, 2.8s) ease-in-out infinite var(--delay, 0s);
+}
+.star.b {
+  animation: twinkle-b var(--dur, 3.2s) ease-in-out infinite var(--delay, 0s);
+}
+.star.c {
+  animation: twinkle-c var(--dur, 4s) ease-in-out infinite var(--delay, 0s);
+}
+/* ================= 动画关键帧 ================= */
+/* 微风摇摆动画 */
+@keyframes curtain-left-wind {
+  0%,
+  100% {
+    transform-origin: top left;
+    transform: skewX(0deg) scaleX(1);
+  }
+  40% {
+    transform-origin: top left;
+    transform: skewX(1.8deg) scaleX(1.02);
+  }
+  70% {
+    transform-origin: top left;
+    transform: skewX(-0.5deg) scaleX(1.01);
+  }
+}
+@keyframes curtain-right-wind {
+  0%,
+  100% {
+    transform-origin: top right;
+    transform: skewX(0deg) scaleX(1);
+  }
+  40% {
+    transform-origin: top right;
+    transform: skewX(-1.8deg) scaleX(1.02);
+  }
+  70% {
+    transform-origin: top right;
+    transform: skewX(0.5deg) scaleX(1.01);
+  }
+}
+/* 星光闪烁动画 */
+@keyframes twinkle-a {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: scale(0.7);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.3);
+  }
+}
+@keyframes twinkle-b {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(1.1);
+  }
+  50% {
+    opacity: 0.15;
+    transform: scale(0.8);
+  }
+}
+@keyframes twinkle-c {
+  0%,
+  100% {
+    opacity: 0.1;
+    transform: scale(0.9);
+  }
+  60% {
+    opacity: 0.7;
+    transform: scale(1.2);
+  }
+}
+
+.isr-projector-housing {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  max-width: 720px;
+  height: 18px;
+  background: linear-gradient(180deg, #ebe0db 0%, #dfd3cd 100%);
+  border-radius: 0 0 10px 10px;
+  box-shadow:
+    0 8px 16px rgba(225, 185, 195, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  z-index: 30;
+}
+
+/**
+ * 幕布外框：宽白「花边底」 + 浅色波点 + 内侧粉色虚线缝线；内层为 `isr-projector-screen`
+ */
+.isr-projector-frame {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 76%;
+  max-width: 680px;
+  z-index: 22;
+  box-sizing: border-box;
+  padding: 14px 14px 16px;
+  border-radius: 8px;
+  background-color: #fffefc;
+  background-image: radial-gradient(rgba(244, 152, 184, 0.085) 1.4px, transparent 1.5px);
+  background-size: 11px 11px;
+  background-position: center top;
+  box-shadow:
+    0 14px 40px rgba(225, 185, 195, 0.38),
+    0 4px 14px rgba(200, 175, 186, 0.22),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.9);
+}
+
+.isr-projector-frame--shut {
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.isr-projector-frame--shut .pink-bow-icon {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/** 纯色 CSS 蝴蝶结：两翼 + body 居中结 */
+.pink-bow-icon {
+  display: block;
+  position: absolute;
+  left: 50%;
+  top: -6px;
+  width: 36px;
+  height: 20px;
+  transform: translateX(-50%);
+  z-index: 26;
+  pointer-events: none;
+}
+.pink-bow-icon::before,
+.pink-bow-icon::after {
+  content: '';
+  position: absolute;
+  top: 8px;
+  width: 15px;
+  height: 11px;
+  box-sizing: border-box;
+  background: radial-gradient(ellipse 85% 100% at 35% 40%, #ffdceb 0%, #f498b8 68%, #e0659a 100%);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 60% 40% 55% 42%;
+}
+.pink-bow-icon::before {
+  left: 2px;
+  transform: rotate(-22deg);
+}
+.pink-bow-icon::after {
+  right: 2px;
+  transform: rotate(22deg) scaleX(-1);
+}
+
+/* 蝴蝶结中心结（可替换为 SVG：往 .pink-bow-icon 内嵌图即可遮住此结） */
+.pink-bow-knot {
+  position: absolute;
+  left: 50%;
+  top: 14px;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 6px;
+  border-radius: 45%;
+  background: linear-gradient(168deg, #fff5fa 0%, #f07aaa 100%);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.75),
+    0 1px 3px rgba(200, 90, 130, 0.25);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.isr-projector-screen {
+  position: relative;
+  left: auto;
+  top: auto;
+  transform: none;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  background: #faf7f9;
+  border: 3px dotted #f498b8;
+  border-radius: 4px;
+  box-shadow:
+    inset 0 0 0 4px rgba(255, 255, 255, 0.95),
+    inset 0 2px 0 rgba(255, 253, 252, 0.9),
+    inset 0 0 20px rgba(244, 200, 220, 0.08);
+  overflow: hidden;
+  transition: height 1.05s cubic-bezier(0.19, 1, 0.22, 1), border-radius 0.35s ease;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+.isr-projector-screen--up {
+  height: 0;
+  border-width: 0;
+}
+.isr-projector-screen--down {
+  height: min(88%, 520px);
+}
+
+.isr-video-container {
+  width: 100%;
+  height: 100%;
+  background: #0a0a0a;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  padding: 0;
+}
+
+/* 投影幕布：浅色文件夹（经典外壳感） + 手绘 / 媒体 / 书案 */
+.isr-pf-root {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', system-ui, sans-serif;
+}
+.isr-pf-tabstrip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 3px;
+  padding: 8px 10px 0;
+  margin: 0;
+  background: linear-gradient(180deg, #dedad2 0%, #cbc7be 100%);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+.isr-pf-tab {
+  position: relative;
+  margin: 0 0 -1px;
+  padding: 7px 14px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #3a3530;
+  cursor: pointer;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  border-bottom: none;
+  border-radius: 5px 5px 0 0;
+  background: linear-gradient(180deg, #e8e4db 0%, #d8d3c8 100%);
+  box-shadow:
+    inset 1px 1px 0 rgba(255, 255, 255, 0.75),
+    0 -1px 0 rgba(255, 255, 255, 0.35);
+}
+.isr-pf-tab:hover {
+  background: linear-gradient(180deg, #f0ece5 0%, #e0dbd2 100%);
+  color: #1f1c18;
+}
+.isr-pf-tab--active {
+  z-index: 2;
+  color: #141210;
+  background: linear-gradient(180deg, #faf7f1 0%, #ece8df 100%);
+  border-color: rgba(0, 0, 0, 0.14);
+  box-shadow:
+    inset 1px 1px 0 rgba(255, 255, 255, 0.92),
+    0 1px 0 #ece8df;
+  padding-bottom: 9px;
+}
+.isr-pf-panel {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  background: linear-gradient(180deg, #ece8df 0%, #e3dfd5 100%);
+  border-top: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.45),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.04);
+}
+.isr-pf-placeholder {
+  min-height: 100%;
+  box-sizing: border-box;
+  padding: 22px 18px 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.isr-pf-placeholder--desk {
+  align-items: stretch;
+  max-width: 360px;
+  margin: 0 auto;
+}
+.isr-pf-icon {
+  font-size: 2.4rem;
+  color: #6b6458;
+  opacity: 0.85;
+}
+.isr-pf-lead {
+  margin: 0;
+  color: #4a453d;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+.isr-pf-muted {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.55;
+  color: #6f6a61;
+  max-width: 320px;
+}
+.isr-pf-draw-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 14px 12px 16px;
+  gap: 12px;
+  min-height: 100%;
+  box-sizing: border-box;
+}
+.isr-pf-draw-img {
+  max-width: 100%;
+  max-height: min(52vh, 360px);
+  object-fit: contain;
+  background: #f5f1ea;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+.isr-pf-draw-edit {
+  display: flex;
+  flex-direction: column;
+  padding: 12px 12px 16px;
+  gap: 8px;
+  min-height: 100%;
+  box-sizing: border-box;
+}
+.isr-pf-canvas-wrap {
+  flex: 1;
+  min-height: 200px;
+  border-radius: 3px;
+  border: 2px groove rgba(255, 255, 255, 0.55);
+  background: #c8c2b8;
+  overflow: hidden;
+}
+.isr-pf-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 200px;
+  touch-action: none;
+  cursor: crosshair;
+}
+.isr-pf-hint {
+  margin: 0;
+  font-size: 11px;
+  line-height: 1.5;
+  color: #5e594f;
+  text-align: center;
+  padding: 0 6px;
+}
+.isr-pf-draw-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+.isr-pf-btn {
+  padding: 7px 14px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  border-radius: 4px;
+  cursor: pointer;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  font-family: inherit;
+}
+.isr-pf-btn--primary {
+  background: linear-gradient(180deg, #3d3a36 0%, #2a2724 100%);
+  color: #f5f1ea;
+  border-color: rgba(0, 0, 0, 0.35);
+}
+.isr-pf-btn--ghost {
+  background: linear-gradient(180deg, #f3efe8 0%, #e0dbd2 100%);
+  color: #353029;
+}
+.isr-pf-btn--warn {
+  background: linear-gradient(180deg, #e8dcc8 0%, #d4c4b0 100%);
+  color: #5c3d32;
+}
+.isr-pf-btn:active {
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.12);
+}
+
+.isr-desk {
+  flex: 4;
+  min-height: 120px;
+  position: relative;
+  background-color: #f5ebe6;
+  background-image: linear-gradient(168deg, #faf6f3 0%, #f5ebe6 45%, #eae0db 100%);
+  box-shadow:
+    0 -8px 24px rgba(225, 185, 195, 0.28),
+    inset 0 4px 0 rgba(255, 255, 255, 0.65);
+  z-index: 40;
+  border-top: 5px solid #ebe0da;
+}
+
+.isr-desk--cocoon {
+  background-image: linear-gradient(172deg, #f7f1ed 0%, #ebe1dc 52%, #e5d9d4 100%);
+}
+.isr-desk--cocoon::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 72% 58% at 50% 44%,
+    transparent 0%,
+    rgba(232, 200, 210, 0.22) 62%,
+    rgba(218, 180, 195, 0.38) 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 桌面上额外摆件（小平板等）；默认全幅叠层占位 — 与 `.isr-desk--with-laptop` 联用时见下方重写 */
+.isr-desk-extras {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+}
+.isr-desk-extras > * {
+  pointer-events: auto;
+}
+
+/**
+ * 疗愈书房书桌 + 实体笔电：
+ * Grid 分列：左 My Journal｜中 笔记本｜右列上遥控 + 下列碎纸机，避免叠罗汉。
+ */
+.isr-desk--with-laptop {
+  display: grid;
+  grid-template-columns: auto minmax(220px, 1fr) auto;
+  grid-template-rows: auto auto;
+  align-items: center;
+  justify-items: center;
+  column-gap: clamp(22px, 4.5vw, 52px);
+  row-gap: clamp(12px, 2vh, 22px);
+  padding: clamp(10px, 2vh, 26px) clamp(12px, 2.8vw, 32px);
+  min-height: clamp(132px, 22vh, 220px);
+  box-sizing: border-box;
+}
+
+.isr-desk--with-laptop .isr-closed-notebook {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  position: relative;
+  left: auto;
+  top: auto;
+  justify-self: center;
+  align-self: center;
+  transform: rotate(-2deg);
+}
+.isr-desk--with-laptop.isr-desk--cocoon .isr-closed-notebook {
+  left: auto;
+}
+
+.isr-desk--with-laptop .isr-closed-notebook:hover {
+  transform: rotate(-2deg) scale(1.04) translateY(-2px);
+}
+
+.isr-desk--with-laptop .isr-desk-extras {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  position: relative;
+  inset: auto;
+  width: 100%;
+  max-width: min(580px, 56vw);
+  min-width: min(240px, 42vw);
+  height: auto;
+  min-height: 0;
+  pointer-events: auto;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.isr-desk--with-laptop .isr-laptop-mount {
+  position: relative;
+  top: auto;
+  left: auto;
+  transform: none;
+}
+
+.isr-desk--with-laptop .isr-remote {
+  grid-column: 3;
+  grid-row: 1;
+  position: relative;
+  right: auto;
+  top: auto;
+  align-self: center;
+  justify-self: center;
+}
+.isr-desk--with-laptop .isr-remote:active {
+  transform: rotate(15deg) scale(0.94);
+}
+
+.isr-desk--with-laptop .dco-shred-wrap--desk {
+  grid-column: 3;
+  grid-row: 2;
+  position: relative;
+  right: auto;
+  bottom: auto;
+  align-self: center;
+  justify-self: center;
+}
+
+@media (max-width: 820px) {
+  .isr-desk--with-laptop {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto;
+    row-gap: 12px;
+  }
+  .isr-desk--with-laptop .isr-closed-notebook {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .isr-desk--with-laptop .isr-desk-extras {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .isr-desk--with-laptop .isr-remote {
+    grid-column: 1;
+    grid-row: 2;
+    align-self: center;
+  }
+  .isr-desk--with-laptop .dco-shred-wrap--desk {
+    grid-column: 2;
+    grid-row: 2;
+    align-self: center;
+  }
+}
+
+/** 无 grid 书桌时挂载位（一般用 `isr-desk--with-laptop` 覆盖为相对定位） */
+.isr-laptop-mount {
+  position: absolute;
+  top: 50%;
+  left: calc(50% + min(110px, 15vw));
+  transform: translate(-50%, -50%);
+  pointer-events: auto;
+}
+
+/* 书桌上挂载位：现为 iPad 小平板（见 healing-tablet-modal.css），不再缩放旧笔记本 chassis */
+.isr-laptop-mount .hts-desk-tablet-closed {
+  filter: drop-shadow(0 10px 22px rgba(216, 191, 216, 0.38));
+}
+
+@media (max-width: 720px) {
+  .isr-laptop-mount {
+    left: calc(50% + min(64px, 12vw));
+  }
+}
+
+.isr-closed-notebook {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-2deg);
+  width: min(200px, 36vw);
+  height: 132px;
+  background-color: transparent;
+  background-image:
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.42) 0 1px,
+      rgba(255, 255, 255, 0.08) 1px 3px,
+      transparent 3px 5px
+    ),
+    linear-gradient(90deg, rgba(255, 253, 255, 0.55) 0%, rgba(255, 249, 252, 0.12) 12px, transparent 18px),
+    linear-gradient(128deg, #f8e9ef 0%, #edd5ea 52%, #e5daf2 100%);
+  background-size: 5px 100%, 100% 100%, 100% 100%;
+  background-repeat: repeat, no-repeat, no-repeat;
+  background-position:
+    left top,
+    left top,
+    left top;
+  border-radius: 5px;
+  box-shadow:
+    0 8px 20px rgba(216, 191, 216, 0.38),
+    4px 4px 0 rgba(255, 251, 252, 0.85),
+    inset 4px 0 0 rgba(255, 255, 255, 0.25);
+  border-left: 4px dashed rgba(255, 255, 255, 0.95);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.25s ease;
+  border-top: none;
+  border-right: none;
+  border-bottom: none;
+  padding: 0;
+  z-index: 2;
+}
+.isr-closed-notebook:hover {
+  transform: translate(-50%, -52%) rotate(-2deg) scale(1.04);
+}
+.isr-closed-notebook::before {
+  content: 'My Journal';
+  font-family: 'Zhi Mang Xing', cursive;
+  color: #d4af37;
+  font-size: clamp(18px, 4vw, 24px);
+}
+
+.isr-remote {
+  position: absolute;
+  top: 38%;
+  right: 12%;
+  width: 40px;
+  height: 96px;
+  background: linear-gradient(180deg, #fafafb 0%, #f4f3f6 48%, #eceaee 100%);
+  border-radius: 8px;
+  transform: rotate(15deg);
+  cursor: pointer;
+  box-shadow:
+    0 8px 20px rgba(216, 191, 216, 0.36),
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    inset 0 -3px 6px rgba(216, 191, 216, 0.12);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 10px;
+  transition: transform 0.15s ease;
+  border: 1px solid rgba(230, 210, 222, 0.72);
+  z-index: 2;
+  color: inherit;
+}
+.isr-remote:active {
+  transform: rotate(15deg) scale(0.94);
+}
+.isr-remote-btn {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #fad6df 0%, #f5b8ce 85%);
+  box-shadow:
+    inset 0 -2px 5px rgba(200, 130, 160, 0.22),
+    0 1px 4px rgba(216, 191, 216, 0.45);
+}
+.isr-remote-btn--on {
+  background: linear-gradient(180deg, #d9ede2 0%, #aed7c7 95%);
+  box-shadow:
+    inset 0 -2px 5px rgba(120, 150, 130, 0.18),
+    0 1px 3px rgba(190, 220, 200, 0.5);
+}
+
+.isr-remote-label {
+  margin-top: 8px;
+  font-size: 8px;
+  line-height: 1.15;
+  text-align: center;
+  color: rgba(143, 127, 136, 0.95);
+}
+
+/* 翻开书本 · 特写 */
+.isr-zoomed {
+  position: absolute;
+  inset: 0;
+  background-color: #2c1e16;
+  background-image: url('https://www.transparenttextures.com/patterns/wood-pattern.png');
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 16px;
+  box-sizing: border-box;
+}
+
+.isr-zoomed--cocoon {
+  background-image:
+    linear-gradient(180deg, rgba(20, 10, 4, 0.75) 0%, rgba(8, 4, 2, 0.88) 100%),
+    url('https://www.transparenttextures.com/patterns/wood-pattern.png');
+}
+
+.isr-zoomed--cocoon .isr-s3-wrap {
+  box-shadow:
+    0 30px 60px rgba(0, 0, 0, 0.78),
+    0 0 80px rgba(255, 165, 85, 0.12);
+}
+
+.isr-back {
+  position: absolute;
+  top: 20px;
+  left: 24px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #d7ccc8;
+  padding: 10px 18px;
+  border-radius: 30px;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(5px);
+  transition: all 0.3s;
+  z-index: 110;
+  font-family: 'Noto Serif SC', serif;
+  font-size: 14px;
+}
+.isr-back:hover {
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
+  transform: translateX(-4px);
+}
+
+.isr-scrapbook-open {
+  width: min(92vw, 1120px);
+  height: min(82vh, 760px);
+  background-color: #fdfbf7;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.78);
+  border-radius: 8px;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0) 49%,
+      rgba(0, 0, 0, 0.1) 50%,
+      rgba(255, 255, 255, 0) 51%,
+      rgba(255, 255, 255, 0) 100%
+    ),
+    url('https://www.transparenttextures.com/patterns/paper.png');
+}
+.isr-scrapbook-open::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 36px;
+  margin-left: -18px;
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.05) 0%,
+    rgba(0, 0, 0, 0.1) 50%,
+    rgba(0, 0, 0, 0.05) 100%
+  );
+  pointer-events: none;
+  z-index: 3;
+}
+
+.isr-page {
+  width: 50%;
+  min-width: 0;
+  padding: clamp(24px, 3.5vw, 48px) clamp(16px, 2.8vw, 36px);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 2;
+}
+
+.isr-page--left {
+  color: #2c3e50;
+  background: transparent;
+}
+
+.isr-page--right {
+  min-height: 0;
+}
+
+.isr-page-title {
+  font-family: 'Zhi Mang Xing', cursive;
+  font-size: clamp(2rem, 4.5vw, 2.8rem);
+  margin: 0 0 1rem;
+  color: #1e293b;
+  line-height: 1.15;
+}
+
+.isr-page-lead {
+  font-style: italic;
+  color: #64748b;
+  font-size: 14px;
+  margin: 0 0 1.25rem;
+  font-family: 'Noto Serif SC', serif;
+}
+
+.isr-page-intro {
+  font-size: 15px;
+  line-height: 1.75;
+  color: #334155;
+  text-align: justify;
+  font-family: 'Noto Serif SC', serif;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+  padding-right: 4px;
+}
+
+.isr-intro-p {
+  margin: 0 0 1rem;
+}
+
+.isr-intro-p:last-child {
+  margin-bottom: 0;
+}
+
+.isr-page-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  font-family: 'Noto Serif SC', 'PingFang SC', serif;
+  color: #1a1a1a;
+}
+
+.isr-page-scroll::-webkit-scrollbar,
+.isr-page-intro::-webkit-scrollbar {
+  width: 5px;
+}
+.isr-page-scroll::-webkit-scrollbar-thumb,
+.isr-page-intro::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.12);
+  border-radius: 3px;
+}
+
+.isr-page-scroll .gtRoot {
+  background: transparent !important;
+  padding: 4px 0 12px !important;
+  min-height: auto !important;
+}
+
+.isr-page-scroll .cdc-root {
+  background: transparent !important;
+  color: inherit;
+  height: auto !important;
+  min-height: 0 !important;
+}
+
+.isr-page-scroll .cdc-main {
+  overflow: visible !important;
+  flex: none !important;
+}
+
+.isr-page-scroll .cdc-root > div:first-child {
+  border-bottom-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+@media (max-width: 780px) {
+  .isr-room-container {
+    flex-direction: column;
+  }
+  .isr-bookshelf-area {
+    width: 100%;
+    height: auto;
+    max-height: 38vh;
+    border-right: none;
+    border-bottom: 12px solid #edc8d6;
+    flex-direction: row;
+    overflow-x: auto;
+    padding: 10px 8px;
+    box-shadow:
+      inset 0 -10px 24px rgba(226, 200, 220, 0.34),
+      inset 8px 0 18px rgba(255, 255, 255, 0.45),
+      0 6px 18px rgba(216, 191, 216, 0.22);
+  }
+  .isr-shelf-row {
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 120px;
+    border-bottom: none;
+    border-right: 12px solid #edc8d6;
+    padding: 28px 6px 12px;
+    box-shadow:
+      inset -10px 0 18px rgba(226, 200, 220, 0.32),
+      inset 10px 0 14px rgba(255, 255, 255, 0.45),
+      6px 0 16px rgba(216, 191, 216, 0.32),
+      2px 0 0 rgba(255, 251, 252, 0.55);
+  }
+  .isr-shelf-row::after {
+    display: none;
+  }
+  .isr-shelf-label {
+    left: 6px;
+    top: 6px;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  }
+  .isr-book-spine {
+    width: 40px;
+  }
+  .isr-wall {
+    flex: 3;
+    min-height: 140px;
+  }
+  .isr-window-frame {
+    width: 88%;
+    height: min(62%, 260px);
+    top: 13%;
+    border-width: 7px;
+  }
+  .isr-floating-shelf--left {
+    left: 4px;
+    top: 32%;
+    width: 72px;
+    transform: scale(0.88);
+    transform-origin: left center;
+  }
+  .isr-floating-shelf-plant {
+    font-size: 1.5rem;
+  }
+  .isr-s3-wrap {
+    min-height: min(88vh, 720px);
+  }
+}
+
+/* —— 深夜疗愈模式：全室夜幕 + 窗外星空（React 状态 `body.night-mode`） —— */
+#room-dark-mask {
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+  opacity: 0;
+  transition: opacity 2s ease;
+  pointer-events: none;
+  background: rgba(15, 10, 25, 0.7);
+}
+body.night-mode #room-dark-mask {
+  opacity: 1;
+}
+
+.night-sky-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 2s ease;
+  pointer-events: none;
+  overflow: hidden;
+}
+.sky-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #0d0822 0%, #1c1240 42%, #2a1a52 100%);
+  opacity: 0.92;
+}
+.night-sky-layer .night-sky-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+body.night-mode .night-sky-layer {
+  opacity: 1;
+}
+
+#healing-lamp {
+  position: absolute;
+  right: clamp(88px, 16vw, 168px);
+  bottom: clamp(6px, 1.6vh, 18px);
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  margin: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  transform: translateZ(0);
+}
+#healing-lamp:focus-visible {
+  outline: 2px solid rgba(236, 180, 200, 0.9);
+  outline-offset: 3px;
+}
+#healing-lamp .lamp-icon {
+  position: relative;
+  z-index: 2;
+  font-size: clamp(1.35rem, 3.2vw, 1.75rem);
+  line-height: 1;
+  filter: drop-shadow(0 2px 6px rgba(255, 200, 120, 0.45));
+  user-select: none;
+  pointer-events: none;
+}
+#healing-lamp .lamp-glow {
+  position: absolute;
+  left: 50%;
+  top: 58%;
+  transform: translate(-50%, -50%);
+  width: 52px;
+  height: 36px;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse 80% 70% at 50% 45%,
+    rgba(255, 210, 140, 0.45) 0%,
+    rgba(255, 180, 90, 0.12) 45%,
+    transparent 72%
+  );
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.85;
+  transition: opacity 0.35s ease;
+}
+body.night-mode #healing-lamp .lamp-glow {
+  opacity: 1;
+}
+
+@media (max-width: 820px) {
+  #healing-lamp {
+    right: clamp(56px, 20vw, 120px);
+    bottom: clamp(4px, 1.2vh, 14px);
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* —— 左隔板矢量小暖：`@keyframes` 均带 `isr-plush-*` 前缀以免污染全局 —— */
+
+@keyframes isr-plush-idle-body {
+  0%,
+  100% {
+    transform: rotate(0deg) translateY(0);
+  }
+  25% {
+    transform: rotate(1.2deg) translateY(-3px);
+  }
+  75% {
+    transform: rotate(-1deg) translateY(-1px);
+  }
+}
+
+@keyframes isr-plush-hair-sway {
+  0%,
+  100% {
+    transform: scaleX(1) rotate(0deg);
+  }
+  10% {
+    transform: scaleX(1.02) rotate(0.5deg);
+  }
+  20% {
+    transform: scaleX(0.98) rotate(-0.3deg);
+  }
+  30% {
+    transform: scaleX(1.01) rotate(0.4deg);
+  }
+  40% {
+    transform: scaleX(0.99) rotate(-0.2deg);
+  }
+  50% {
+    transform: scaleX(1) rotate(0deg);
+  }
+}
+
+@keyframes isr-plush-blink {
+  0%,
+  90%,
+  100% {
+    transform: scaleY(1);
+  }
+  95% {
+    transform: scaleY(0.08);
+  }
+}
+
+@keyframes isr-plush-blush-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 0.85;
+  }
+}
+
+@keyframes isr-plush-lace-drift {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(2px);
+  }
+}
+
+@keyframes isr-plush-bokeh-pulse {
+  0%,
+  100% {
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 0.28;
+  }
+}
+
+@keyframes isr-plush-bow-shiver {
+  0%,
+  100% {
+    transform: rotate(-1deg);
+  }
+  50% {
+    transform: rotate(1deg);
+  }
+}
+
+@keyframes isr-plush-float-shadow {
+  0%,
+  100% {
+    transform: translateY(0) scaleX(1);
+    opacity: 0.18;
+  }
+  50% {
+    transform: translateY(2px) scaleX(0.89);
+    opacity: 0.11;
+  }
+}
+
+.isr-plush-doll {
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.isr-plush-doll__svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.isr-plush-doll .isr-plush-doll-shadow {
+  transform-origin: 180px 408px;
+  animation: isr-plush-float-shadow 3s ease-in-out infinite;
+}
+
+.isr-plush-doll .isr-plush-doll-bokeh {
+  opacity: 0.1;
+  animation: isr-plush-bokeh-pulse 5s ease-in-out infinite;
+}
+
+.isr-plush-doll .doll-wrap {
+  animation: isr-plush-idle-body 3.2s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+
+.isr-plush-doll .hair-layer {
+  animation: isr-plush-hair-sway 4s ease-in-out infinite;
+  transform-origin: top center;
+}
+
+.isr-plush-doll .blink-group {
+  transform-origin: 180px 160px;
+  animation: isr-plush-blink 4s ease-in-out infinite;
+}
+
+.isr-plush-doll .blush {
+  animation: isr-plush-blush-pulse 2.5s ease-in-out infinite;
+}
+
+.isr-plush-doll .isr-plush-doll-lace-layer {
+  animation: isr-plush-lace-drift 3s ease-in-out infinite;
+}
+
+.isr-plush-doll .white-bow-group {
+  animation: isr-plush-bow-shiver 4s ease-in-out infinite;
+  transform-origin: 180px 262px;
+}

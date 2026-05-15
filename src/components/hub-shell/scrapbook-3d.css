@@ -1,0 +1,314 @@
+/* 3D 手账本：z-index 翻页调度见 scrapbook-3d.tsx */
+
+.isr-s3-wrap {
+  width: min(92vw, 1120px);
+  height: min(82vh, 760px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 8px 10px 20px;
+}
+
+.isr-s3-stage {
+  width: min(800px, 100%);
+  height: min(550px, calc(82vh - 56px));
+  perspective: 2500px;
+  position: relative;
+  transform: rotateX(5deg) rotateY(-2deg);
+  transform-style: preserve-3d;
+}
+
+.isr-s3-thickness {
+  position: absolute;
+  top: 5px;
+  bottom: 5px;
+  right: -12px;
+  left: 0;
+  background: #fff;
+  border-radius: 5px 15px 15px 5px;
+  box-shadow:
+    25px 25px 50px rgba(0, 0, 0, 0.7),
+    inset -8px 0 15px rgba(0, 0, 0, 0.1);
+  z-index: 0;
+  border-right: 4px solid #d7ccc8;
+  pointer-events: none;
+}
+
+.isr-s3-bookmark {
+  position: absolute;
+  top: -10px;
+  left: 50px;
+  width: 30px;
+  height: 60px;
+  padding: 0 0 5px;
+  margin: 0;
+  border: none;
+  background: #b71c1c;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  z-index: 120;
+  cursor: pointer;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  color: #fff;
+  font-size: 12px;
+  transition: transform 0.2s;
+}
+
+.isr-s3-bookmark:hover {
+  transform: translateY(-5px);
+}
+
+.isr-s3-bookmark::after {
+  content: '';
+  position: absolute;
+  bottom: -15px;
+  left: 0;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-top: 15px solid #b71c1c;
+}
+
+.isr-s3-page {
+  width: 50%;
+  height: 100%;
+  position: absolute;
+  right: 0;
+  transform-style: preserve-3d;
+  transform-origin: left center;
+  transition: transform 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.isr-s3-page--flipped {
+  transform: rotateY(-180deg);
+}
+
+.isr-s3-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  background-color: #fdfbf7;
+  background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');
+  box-sizing: border-box;
+  padding: clamp(24px, 3vw, 40px);
+  overflow: hidden;
+}
+
+.isr-s3-face--front {
+  box-shadow: inset 15px 0 30px rgba(0, 0, 0, 0.08);
+}
+
+.isr-s3-face--spread {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.isr-s3-face--back {
+  transform: rotateY(180deg);
+  box-shadow: inset -15px 0 30px rgba(0, 0, 0, 0.08);
+}
+
+/* 封面 */
+.isr-s3-cover-front {
+  background-color: #2c3e50;
+  background-image: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-left: 15px solid #1a252f;
+  box-shadow: inset 10px 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.isr-s3-photo-frame {
+  width: 70%;
+  height: 50%;
+  max-height: 240px;
+  background: #fff;
+  padding: 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+  transform: rotate(-2deg);
+  margin-bottom: 24px;
+  transition: transform 0.3s;
+}
+
+.isr-s3-photo-frame:hover {
+  transform: rotate(0deg) scale(1.02);
+}
+
+.isr-s3-cover-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: 1px solid #eee;
+  display: block;
+}
+
+.isr-s3-cover-title {
+  font-family: 'Zhi Mang Xing', cursive;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  color: #d4af37;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  margin: 0;
+  line-height: 1.1;
+}
+
+.isr-s3-cover-back {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.isr-s3-cover-motto {
+  margin: 0 16px 20px;
+  font-size: clamp(14px, 2vw, 17px);
+  line-height: 1.85;
+  color: #888;
+  font-style: italic;
+  font-family: 'Noto Serif SC', serif;
+}
+
+.isr-s3-cover-date {
+  margin: 0;
+  font-size: 13px;
+  color: #aaa;
+  font-family: 'Noto Serif SC', serif;
+}
+
+/* 内页排版（与 isr-page-* 协同） */
+.isr-s3-h2 {
+  color: #5d4037;
+  border-bottom: 1px solid #d7ccc8;
+  padding-bottom: 10px;
+  margin: 0 0 12px;
+  font-size: clamp(1.1rem, 2.2vw, 1.35rem);
+  font-family: 'Noto Serif SC', serif;
+}
+
+.isr-s3-lead {
+  margin-top: 0;
+}
+
+.isr-s3-intro {
+  flex: 1;
+  min-height: 0;
+}
+
+.isr-s3-module-wrap {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+.isr-s3-preface {
+  margin: 0 0 10px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: #5d4037;
+  font-family: 'Noto Serif SC', serif;
+}
+
+.isr-s3-module-scroll {
+  flex: 1;
+  min-height: 120px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.isr-s3-bridge {
+  margin: 80px 12px 0;
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.85;
+  color: #6d4c41;
+  font-family: 'Noto Serif SC', serif;
+}
+
+.isr-s3-end-title {
+  margin: 70px 0 16px;
+  text-align: center;
+  font-size: 1.25rem;
+  color: #5d4037;
+  font-family: 'Noto Serif SC', serif;
+}
+
+.isr-s3-end-note {
+  margin: 0 20px;
+  text-align: center;
+  font-size: 13px;
+  line-height: 1.75;
+  color: #6d4c41;
+  font-family: 'Noto Serif SC', serif;
+}
+
+.isr-s3-hint {
+  position: absolute;
+  bottom: 18px;
+  font-size: 12px;
+  color: #999;
+  cursor: pointer;
+  border: none;
+  padding: 6px 10px;
+  background: rgba(255, 255, 255, 0.65);
+  border-radius: 999px;
+  font-family: 'Noto Serif SC', 'PingFang SC', serif;
+  transition:
+    color 0.25s,
+    background 0.25s;
+}
+
+.isr-s3-hint:hover {
+  color: #b8860b;
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.isr-s3-hint--right {
+  right: 22px;
+}
+
+.isr-s3-hint--left {
+  left: 22px;
+}
+
+.isr-s3-hint--cover {
+  right: 22px;
+  bottom: 26px;
+  color: rgba(255, 255, 255, 0.88);
+  background: rgba(0, 0, 0, 0.22);
+}
+
+.isr-s3-hint--cover:hover {
+  color: #fff;
+  background: rgba(0, 0, 0, 0.38);
+}
+
+@media (max-width: 780px) {
+  .isr-s3-wrap {
+    height: auto;
+    max-height: none;
+    min-height: min(88vh, 720px);
+    padding: 6px 4px 16px;
+  }
+
+  .isr-s3-stage {
+    height: min(520px, 78vh);
+    transform: rotateX(2deg) rotateY(0deg);
+    perspective: 2000px;
+  }
+
+  .isr-s3-bookmark {
+    left: 28px;
+    height: 52px;
+  }
+
+  .isr-s3-hint {
+    font-size: 11px;
+    padding: 5px 8px;
+  }
+}

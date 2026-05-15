@@ -1,5 +1,6 @@
-import { useState, type CSSProperties } from 'react';
+import { useEffect, useState } from 'react';
 
+import '@/components/hub-shell/hub-paper-nav.css';
 import { TwoColumnLayout } from '@/components/hub-shell/two-column-layout';
 import { WideScreenDecoration } from '@/components/hub-shell/wide-screen-decoration';
 import { useContainerWidth } from '@/hooks/use-container-width';
@@ -8,6 +9,7 @@ import { MsnApp } from '@/apps/msn';
 import { WuFaJiChuDeXinApp } from '@/apps/wu_fa_ji_chu_de_xin';
 import { ShengYinJiaoNangApp } from '@/apps/sheng_yin_jiao_nang';
 import { WrongAnswerHealApp } from '@/apps/dan_nian_cuoti';
+import { consumeHubInitialTab } from '@/lib/hub-initial-tab';
 
 type TabId = 'comfort' | 'msn' | 'letter' | 'voice' | 'wrongAnswer';
 
@@ -19,26 +21,25 @@ const TABS: { id: TabId; label: string }[] = [
   { id: 'wrongAnswer', label: '写给当年的错题' },
 ];
 
-const BTN: CSSProperties = {
-  display: 'block',
-  width: '100%',
-  textAlign: 'left',
-  padding: '10px 14px',
-  margin: 0,
-  border: 'none',
-  borderRadius: 8,
-  fontSize: 13,
-  fontWeight: 500,
-  cursor: 'pointer',
-  fontFamily: 'system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif',
-};
-
 export function MindSpaceHubApp() {
   const { ref, width } = useContainerWidth();
   const [tab, setTab] = useState<TabId>('comfort');
 
+  useEffect(() => {
+    const raw = consumeHubInitialTab('mindSpaceHub');
+    if (
+      raw === 'comfort' ||
+      raw === 'msn' ||
+      raw === 'letter' ||
+      raw === 'voice' ||
+      raw === 'wrongAnswer'
+    ) {
+      setTab(raw);
+    }
+  }, []);
+
   const sidebar = (
-    <nav aria-label="心灵空间" style={{ padding: 10, display: 'flex', flexDirection: 'column', gap: 6 }}>
+    <nav className="hpn-nav hpn-nav--roomy" aria-label="心灵空间">
       {TABS.map((t) => {
         const on = t.id === tab;
         return (
@@ -46,12 +47,7 @@ export function MindSpaceHubApp() {
             key={t.id}
             type="button"
             onClick={() => setTab(t.id)}
-            style={{
-              ...BTN,
-              background: on ? 'rgba(244, 114, 182, 0.34)' : 'transparent',
-              color: on ? '#831843' : '#4a0432',
-              boxShadow: on ? 'inset 0 0 0 1px rgba(219, 39, 119, 0.25)' : 'none',
-            }}
+            className={`hpn-btn${on ? ' hpn-btn--active' : ''}`}
           >
             {t.label}
           </button>

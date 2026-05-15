@@ -1,0 +1,324 @@
+/*
+ * 纸质控件语言：作用在 `.isr-paper-surface` 与全局 `[data-theme="paper"]`。
+ * 故意不覆盖带 inline linear-gradient 的节点，避免打碎 SVG/疗愈 UI 的渐变。
+ */
+
+/* ── 1. 纸本容器基底 ── */
+.isr-paper-surface {
+  background: var(--color-bg-base);
+  background-image: var(--texture-paper);
+  color: var(--color-ink-primary);
+  font-family: var(--font-serif);
+}
+
+/* ── 2. 通用卡片 / Surface ── */
+.isr-paper-surface .card,
+.isr-paper-surface [class*='card'],
+.isr-paper-surface [class*='panel'],
+.isr-paper-surface [class*='surface'],
+.isr-paper-surface [class*='module'],
+:root[data-theme='paper'] .card,
+:root[data-theme='paper'] [class*='card'],
+:root[data-theme='paper'] [class*='panel'],
+:root[data-theme='paper'] [class*='surface'],
+:root[data-theme='paper'] [class*='module'] {
+  background: var(--color-bg-surface);
+  background-image: var(--texture-paper);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  color: var(--color-ink-primary);
+}
+
+/* ── 3. 按钮 ── */
+.isr-paper-surface .btn-primary,
+.isr-paper-surface button[data-variant='primary'],
+:root[data-theme='paper'] .btn-primary,
+:root[data-theme='paper'] button[data-variant='primary'] {
+  background: var(--color-accent-primary);
+  color: var(--color-ink-inverse);
+  border: none;
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-5);
+  font-family: var(--font-sans);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background var(--duration-fast) var(--easing-default),
+    box-shadow var(--duration-fast) var(--easing-default);
+}
+.isr-paper-surface .btn-primary:hover,
+.isr-paper-surface button[data-variant='primary']:hover,
+:root[data-theme='paper'] .btn-primary:hover,
+:root[data-theme='paper'] button[data-variant='primary']:hover {
+  background: var(--color-accent-hover);
+  box-shadow: var(--shadow-sm);
+}
+
+.isr-paper-surface .btn-secondary,
+.isr-paper-surface button[data-variant='secondary'],
+:root[data-theme='paper'] .btn-secondary,
+:root[data-theme='paper'] button[data-variant='secondary'] {
+  background: transparent;
+  color: var(--color-accent-primary);
+  border: 1.5px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-5);
+  font-family: var(--font-sans);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background var(--duration-fast),
+    border-color var(--duration-fast);
+}
+.isr-paper-surface .btn-secondary:hover,
+.isr-paper-surface button[data-variant='secondary']:hover,
+:root[data-theme='paper'] .btn-secondary:hover,
+:root[data-theme='paper'] button[data-variant='secondary']:hover {
+  background: var(--color-bg-deep);
+  border-color: var(--color-accent-primary);
+}
+
+.isr-paper-surface .btn-ghost,
+.isr-paper-surface button[data-variant='ghost'],
+:root[data-theme='paper'] .btn-ghost,
+:root[data-theme='paper'] button[data-variant='ghost'] {
+  background: transparent;
+  color: var(--color-ink-secondary);
+  border: none;
+  border-radius: var(--radius-md);
+  padding: var(--space-2);
+  cursor: pointer;
+  transition:
+    background var(--duration-fast),
+    color var(--duration-fast);
+}
+.isr-paper-surface .btn-ghost:hover,
+.isr-paper-surface button[data-variant='ghost']:hover,
+:root[data-theme='paper'] .btn-ghost:hover,
+:root[data-theme='paper'] button[data-variant='ghost']:hover {
+  background: var(--color-bg-deep);
+  color: var(--color-ink-primary);
+}
+
+/* ── 4. 输入框 ── */
+.isr-paper-surface input,
+.isr-paper-surface textarea,
+.isr-paper-surface select,
+:root[data-theme='paper'] input,
+:root[data-theme='paper'] textarea,
+:root[data-theme='paper'] select {
+  background: var(--color-bg-surface);
+  background-image: var(--texture-paper);
+  color: var(--color-ink-primary);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-3);
+  font-family: var(--font-serif);
+  font-size: var(--font-size-md);
+  outline: none;
+  transition: border-color var(--duration-fast);
+}
+.isr-paper-surface input:focus,
+.isr-paper-surface textarea:focus,
+.isr-paper-surface select:focus,
+:root[data-theme='paper'] input:focus,
+:root[data-theme='paper'] textarea:focus,
+:root[data-theme='paper'] select:focus {
+  border-color: var(--color-accent-primary);
+  box-shadow: 0 0 0 3px rgba(122, 92, 58, 0.15);
+}
+.isr-paper-surface input::placeholder,
+.isr-paper-surface textarea::placeholder,
+:root[data-theme='paper'] input::placeholder,
+:root[data-theme='paper'] textarea::placeholder {
+  color: var(--color-ink-muted);
+}
+
+/* ── 5. Tab ── */
+.isr-paper-surface [role='tablist'],
+.isr-paper-surface .tab-list,
+:root[data-theme='paper'] [role='tablist'],
+:root[data-theme='paper'] .tab-list {
+  display: flex;
+  gap: var(--space-1);
+  background: var(--color-bg-deep);
+  border-radius: var(--radius-lg);
+  padding: var(--space-1);
+  border: 1px solid var(--color-border);
+}
+.isr-paper-surface [role='tab'],
+.isr-paper-surface .tab-item,
+:root[data-theme='paper'] [role='tab'],
+:root[data-theme='paper'] .tab-item {
+  flex: 1;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-md);
+  border: none;
+  background: transparent;
+  color: var(--color-ink-secondary);
+  font-family: var(--font-sans);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background var(--duration-fast),
+    color var(--duration-fast);
+  text-align: center;
+}
+.isr-paper-surface [role='tab'][aria-selected='true'],
+.isr-paper-surface .tab-item.active,
+.isr-paper-surface .tab-item[data-active='true'],
+:root[data-theme='paper'] [role='tab'][aria-selected='true'],
+:root[data-theme='paper'] .tab-item.active,
+:root[data-theme='paper'] .tab-item[data-active='true'] {
+  background: var(--color-bg-surface);
+  color: var(--color-ink-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ── 6. 徽章 / Tag ── */
+.isr-paper-surface .badge,
+.isr-paper-surface [class*='tag'],
+.isr-paper-surface [class*='chip'],
+:root[data-theme='paper'] .badge,
+:root[data-theme='paper'] [class*='tag'],
+:root[data-theme='paper'] [class*='chip'] {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  background: var(--color-bg-deep);
+  border: 1px solid var(--color-border);
+  color: var(--color-ink-secondary);
+  font-family: var(--font-sans);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+}
+
+/* ── 7. 分割线 ── */
+.isr-paper-surface hr,
+.isr-paper-surface .divider,
+:root[data-theme='paper'] hr,
+:root[data-theme='paper'] .divider {
+  border: none;
+  border-top: 1px solid var(--color-border);
+  margin: var(--space-4) 0;
+}
+
+/* ── 8. 弹窗 / 抽屉 ── */
+.isr-paper-surface [role='dialog'],
+.isr-paper-surface .modal,
+.isr-paper-surface .drawer,
+:root[data-theme='paper'] [role='dialog'],
+:root[data-theme='paper'] .modal,
+:root[data-theme='paper'] .drawer {
+  background: var(--color-bg-surface);
+  background-image: var(--texture-paper);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  color: var(--color-ink-primary);
+}
+
+/* ── 9. 列表 ── */
+.isr-paper-surface ul,
+.isr-paper-surface ol,
+:root[data-theme='paper'] ul,
+:root[data-theme='paper'] ol {
+  padding-left: var(--space-5);
+}
+.isr-paper-surface li,
+:root[data-theme='paper'] li {
+  margin-bottom: var(--space-1);
+  line-height: var(--line-height-normal);
+}
+
+/* ── 10. 标题层级 ── */
+.isr-paper-surface h1,
+:root[data-theme='paper'] h1 {
+  font-size: var(--font-size-3xl);
+  font-weight: 700;
+  line-height: var(--line-height-tight);
+}
+.isr-paper-surface h2,
+:root[data-theme='paper'] h2 {
+  font-size: var(--font-size-2xl);
+  font-weight: 600;
+}
+.isr-paper-surface h3,
+:root[data-theme='paper'] h3 {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+}
+.isr-paper-surface h4,
+:root[data-theme='paper'] h4 {
+  font-size: var(--font-size-lg);
+  font-weight: 500;
+}
+.isr-paper-surface p,
+:root[data-theme='paper'] p {
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-loose);
+}
+.isr-paper-surface small,
+:root[data-theme='paper'] small {
+  font-size: var(--font-size-xs);
+  color: var(--color-ink-muted);
+}
+
+/* ── 11. 书脊装饰 ── */
+.isr-paper-surface .book-spine,
+:root[data-theme='paper'] .book-spine {
+  background: linear-gradient(
+    135deg,
+    var(--color-accent-primary),
+    var(--color-accent-soft) 60%,
+    var(--color-accent-hover)
+  );
+  box-shadow: var(--shadow-book);
+  border-radius: var(--radius-sm) var(--radius-md) var(--radius-md) var(--radius-sm);
+}
+
+/* ── 12. 纸质文件夹 ── */
+.isr-paper-surface .folder,
+.isr-paper-surface [class*='folder'],
+:root[data-theme='paper'] .folder,
+:root[data-theme='paper'] [class*='folder'] {
+  background: var(--color-bg-surface);
+  background-image: var(--texture-paper);
+  border: 1px solid var(--color-border-strong);
+  border-radius: 0 var(--radius-md) var(--radius-md) var(--radius-md);
+  box-shadow: 2px 3px 10px var(--color-shadow);
+  color: var(--color-ink-primary);
+}
+
+/* ── 13. 磨砂壳弱化为纸本 ── */
+.isr-paper-surface [class*='glass'],
+.isr-paper-surface [class*='frosted'],
+:root[data-theme='paper'] [class*='glass'],
+:root[data-theme='paper'] [class*='frosted'] {
+  background: rgba(253, 248, 242, 0.88) !important;
+  backdrop-filter: blur(8px) saturate(1.2) !important;
+  border: 1px solid var(--color-border) !important;
+  color: var(--color-ink-primary) !important;
+}
+
+/* 豁免：3D 书、封面、灯光、气球等保持原样 */
+.isr-paper-surface .no-skin,
+.isr-paper-surface .book-3d,
+.isr-paper-surface .cover-image,
+.isr-paper-surface .lamp-glow,
+.isr-paper-surface .balloon,
+.isr-paper-surface .balloon-wrap,
+:root[data-theme='paper'] .no-skin,
+:root[data-theme='paper'] .book-3d,
+:root[data-theme='paper'] .cover-image,
+:root[data-theme='paper'] .lamp-glow,
+:root[data-theme='paper'] .balloon,
+:root[data-theme='paper'] .balloon-wrap {
+  all: revert;
+}
